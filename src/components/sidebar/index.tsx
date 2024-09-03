@@ -5,16 +5,17 @@ import { ChevronFirst, ChevronLast, MoreVertical } from "lucide-react";
 import profileIcon from "@/assets/icons/profile.png";
 
 interface ISidebarItemProps {
-  children: React.ReactNode;
+  children: React.ReactNode
+  className: string
 }
 
 export const SidebarContext = createContext({ expanded: true });
 
-export const Sidebar = ({ children }: ISidebarItemProps) => {
+export const Sidebar = ({ children, className }: ISidebarItemProps) => {
   const [expanded, setExpanded] = useState(true);
 
   return (
-    <aside className={`h-screen bg-white border-r shadow-sm transition-all ${expanded ? "w-[260px]" : "w-[70px]"}`}>
+    <aside className={`h-screen bg-white border-r shadow-sm transition-all ${className && className} ${expanded ? "w-[260px]" : "w-[70px]"}`}>
       <nav className="h-full flex flex-col bg-white border-r shadow-sm">
         <div className="p-4 pb-2 flex justify-between items-center">
           {

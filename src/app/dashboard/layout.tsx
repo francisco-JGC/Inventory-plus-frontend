@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="flex h-screen bg-gray-100">
-          <Sidebar>
+          <Sidebar className="sticky top-0 h-full">
             {
               MENU_ITEMS.map((item, index) => (
                 <SidebarItem
@@ -33,7 +33,7 @@ export default function RootLayout({
               ))
             }
           </Sidebar>
-          <div className="p-4 w-full">
+          <div className="p-4 w-full overflow-y-auto">
             {children}
           </div>
         </div>
