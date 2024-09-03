@@ -28,11 +28,12 @@ export default function RootLayout({
                   key={index}
                   icon={<item.icon size={20} />}
                   text={item.label}
+                  path={item.path}
                 />
               ))
             }
           </Sidebar>
-          <div className="content">
+          <div className="p-4 w-full">
             {children}
           </div>
         </div>
