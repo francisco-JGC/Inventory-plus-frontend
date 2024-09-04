@@ -32,7 +32,7 @@ const chartConfig = {
   },
   sales: {
     label: "Ventas",
-    color: "hsl(var(--chart-1))",
+    color: "#60a5fa",
   },
 } satisfies ChartConfig
 
