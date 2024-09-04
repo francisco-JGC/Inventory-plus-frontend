@@ -42,11 +42,14 @@ export const Sidebar = ({ children, className }: ISidebarItemProps) => {
 
 
         <div className="border-t flex p-3">
-          <Image src={profileIcon} alt=""
-            className="w-10 h-10 rounded-s-md"
-            width={40}
-            height={40}
-          />
+          <Link href={`/dashboard/profile`}
+            className="w-10 h-10">
+            <Image src={profileIcon} alt=""
+              className="w-10 h-10 rounded-s-md"
+              width={40}
+              height={40}
+            />
+          </Link>
 
           <div className={`flex justify-between items-center overflow-hidden transition-all
             ${expanded ? "w-52 ml-3" : "w-0"}`} >
@@ -58,7 +61,7 @@ export const Sidebar = ({ children, className }: ISidebarItemProps) => {
               <DropdownMenuTrigger>
                 <Button variant={"outline"} className="border-none"><MoreVertical size={20} /></Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white shadow p-4 ">
+              <DropdownMenuContent className="bg-white shadow p-4 flex flex-col gap-1">
                 <DropdownMenuItem>
                   <Link href={`/dashboard/profile`}>
                     Ver Perfil
@@ -76,6 +79,6 @@ export const Sidebar = ({ children, className }: ISidebarItemProps) => {
 
         </div>
       </nav>
-    </aside>
+    </aside >
   );
 }
