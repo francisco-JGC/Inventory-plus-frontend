@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { StatisticData } from "./_components/statisticData";
-import { FluctuationChart } from "./_components/chartFluctuation";
+import { FluctuationChart } from "./_components/fluctuationChart";
 import { ActionsLinks } from "./_components/actionsLinks";
 import { TopProducts } from "./_components/topProducts";
+import { TopProductsChart } from "./_components/topProductsChart";
 
 
 export default function Home() {
@@ -12,9 +13,8 @@ export default function Home() {
       <StatisticData />
       <ActionsLinks />
       <FluctuationChart />
-      <div>
-        <TopProducts />
-      </div>
+      <TopProducts />
+      <TopProductsChart />
     </div>
   );
 }
