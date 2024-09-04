@@ -39,19 +39,7 @@ const invoices = [
     provider: "Paid",
     sales: "687",
     stock: "PayPal",
-  },
-  {
-    product_name: "Nombre del product 6",
-    provider: "Pending",
-    sales: "892",
-    stock: "Bank Transfer",
-  },
-  {
-    product_name: "Nombre del product 7",
-    provider: "Unpaid",
-    sales: "672",
-    stock: "Credit Card",
-  },
+  }
 ]
 
 export const TopProducts = () => {
