@@ -3,6 +3,9 @@ import Image from "next/image";
 import { createContext, useState } from "react";
 import { ChevronFirst, ChevronLast, MoreVertical } from "lucide-react";
 import profileIcon from "@/assets/icons/profile.png";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 interface ISidebarItemProps {
   children: React.ReactNode
@@ -51,8 +54,24 @@ export const Sidebar = ({ children, className }: ISidebarItemProps) => {
               <h4 className="font-semibold">Jhon Doe</h4>
               <span className="text-xs text-gray-600">Francisco@gmail.com</span>
             </div>
-
-            <MoreVertical size={20} />
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Button variant={"outline"} className="border-none"><MoreVertical size={20} /></Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white shadow p-4 ">
+                <DropdownMenuItem>
+                  <Link href={`/dashboard/profile`}>
+                    Ver Perfil
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <DropdownMenuLabel>
+                    Cerrar Sesión
+                  </DropdownMenuLabel>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
         </div>
