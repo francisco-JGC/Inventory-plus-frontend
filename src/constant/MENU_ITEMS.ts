@@ -4,6 +4,7 @@ import {
   Users,
   FileBadge,
   ReceiptIcon,
+  ReceiptText,
 } from "lucide-react";
 
 export const MENU_ITEMS = [
@@ -13,8 +14,13 @@ export const MENU_ITEMS = [
     path: "/dashboard",
   },
   {
+    icon: ReceiptText,
+    label: "Nueva Factura",
+    path: "/dashboard/new-invoice",
+  },
+  {
     icon: ReceiptIcon,
-    label: "Facturación",
+    label: "Facturas",
     path: "/dashboard/billing",
   },
   {
