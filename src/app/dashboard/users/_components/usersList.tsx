@@ -1,10 +1,11 @@
 'use client'
 import { DataTable } from '@/components/dataTable'
 import { ColumnsListUsers } from './usersListColumns'
-import { useForm } from '@/hooks/useForm'
+import useForm from '@/hooks/useForm'
 import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { ISearch } from '../../_types/pagination'
 
 export type IUsers = {
   id: number | string
@@ -99,7 +100,7 @@ const data: IUsers[] = [
 ]
 
 export const UsersList = () => {
-  const { values: search, handleInputChange } = useForm({
+  const { formValues: search, handleInputChange } = useForm<ISearch>({
     search: ''
   })
   const [currentPage, setCurrentPage] = useState<number>(1)

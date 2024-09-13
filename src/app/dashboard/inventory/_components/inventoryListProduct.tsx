@@ -1,10 +1,11 @@
 'use client'
 import { DataTable } from '@/components/dataTable'
 import { ColumnsListProduct } from './listProductColumns'
-import { useForm } from '@/hooks/useForm'
+import useForm from '@/hooks/useForm'
 import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { ISearch } from '../../_types/pagination'
 
 export type IProduct = {
   id: number | string
@@ -121,7 +122,7 @@ const data: IProduct[] = [
 ]
 
 export const InventoryListProduct = () => {
-  const { values: search, handleInputChange } = useForm({
+  const { formValues: search, handleInputChange } = useForm<ISearch>({
     search: ''
   })
   const [currentPage, setCurrentPage] = useState<number>(1)
