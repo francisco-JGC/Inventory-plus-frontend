@@ -4,6 +4,7 @@ import { InvoiceDetails } from "./_components/invoiceDetails";
 import { useState } from "react";
 import { toast } from "sonner";
 import useForm from "@/hooks/useForm";
+import { InvoicePreview } from "./_components/invoicePreview";
 
 export interface IProductInvoice {
   id: number
@@ -117,7 +118,7 @@ export default function NewInvoicePage() {
         <h2 className="font-bold flex gap-4 items-center text-gray-400">Nueva Factura <ReceiptText width={20} /></h2>
       </header>
 
-      <div className="flex gap-4 bg-white p-4 rounded shadow-sm">
+      <div className="flex gap-4 justify-between bg-white p-4 rounded shadow-sm">
         <InvoiceDetails
           handleInputChangeClientInfo={handleInputChange}
           products={products}
@@ -126,6 +127,11 @@ export default function NewInvoicePage() {
           handleSelectedProduct={handleSelectedProduct}
           handleItemQuantity={handleItemQuantity}
           handleDeleteSelectedProduct={handleDeleteSelectedProduct}
+        />
+
+        <InvoicePreview
+          client_name={clientInfo.clientName}
+          selectedProducts={selectedProducts}
         />
       </div>
     </div>
