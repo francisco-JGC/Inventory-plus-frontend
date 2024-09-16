@@ -1,5 +1,6 @@
 import { PriceFormat } from "@/utils/price-format"
 import { ISelectedProducts } from "../page"
+import { useEffect, useState } from "react"
 
 interface IProps {
   client_name: string
@@ -7,6 +8,17 @@ interface IProps {
 }
 
 export const InvoicePreview = ({ client_name, selectedProducts }: IProps) => {
+  const [subtotal, setSubtotal] = useState<number>(0)
+  const [tax, setTaxt] = useState<number>(0)
+
+  useEffect(() => {
+    setSubtotal(selectedProducts.products.reduce((acc, cur) => acc + (cur.price * cur.quantity), 0))
+  }, [selectedProducts])
+
+  useEffect(() => {
+    setTaxt(subtotal * (selectedProducts.tax / 100))
+  }, [subtotal, selectedProducts])
+
   return (
     <div className="bg-gray-200 w-2/4 p-10 rounded-lg text-sm">
       <div className="bg-white p-4 rounded-lg shadow-md flex flex-col gap-4">
@@ -61,7 +73,7 @@ export const InvoicePreview = ({ client_name, selectedProducts }: IProps) => {
             <span></span>
             <span>Subtotal</span>
             <span>{PriceFormat(
-              selectedProducts.products.reduce((acc, cur) => acc + cur.price, 0)
+              subtotal
             )}</span>
           </div>
 
@@ -70,7 +82,26 @@ export const InvoicePreview = ({ client_name, selectedProducts }: IProps) => {
             <span></span>
             <span></span>
             <span>Descuento</span>
-            <span>{selectedProducts.discount}</span>
+            <span>{selectedProducts.discount > 0 ? `${PriceFormat(subtotal * (selectedProducts.discount / 100))}` : 'N/A'}</span>
+          </div>
+
+          <div className="grid grid-cols-5 p-2 rounded">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span>Impuesto</span>
+            <span>{PriceFormat(tax)}</span>
+          </div>
+
+          <div className="grid grid-cols-5 p-2 rounded font-bold">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span>TOTAL</span>
+            <span>{
+              PriceFormat(
+                (subtotal - (subtotal * (selectedProducts.discount / 100))) + tax
+              )}</span>
           </div>
         </div>
       </div>
