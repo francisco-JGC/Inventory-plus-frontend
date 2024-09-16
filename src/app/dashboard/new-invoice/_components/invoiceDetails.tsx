@@ -13,9 +13,10 @@ interface IProps {
   handleSelectedProduct: (product: ISelectedItem) => void
   handleItemQuantity: (id: number, quantity: number) => void
   handleDeleteSelectedProduct: (id: number) => void
+  handleSetDiscount: (discount: number) => void
 }
 
-export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientInfo, selectedProducts, handleSelectedProduct, handleItemQuantity, handleDeleteSelectedProduct }: IProps) => {
+export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientInfo, selectedProducts, handleSelectedProduct, handleItemQuantity, handleDeleteSelectedProduct, handleSetDiscount }: IProps) => {
   return (
     <div className="flex flex-col gap-4 w-2/4">
       <h3 className="font-bold">Detalles de Factura</h3>
@@ -56,7 +57,7 @@ export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientIn
             <span className="font-bold text-gray-600">Precio U.</span>
 
           </div>
-          <div className="max-h-60 min-h-60 overflow-auto flex flex-col gap-2">
+          <div className="max-h-52 min-h-52 overflow-auto flex flex-col gap-2">
             {
               selectedProducts.length > 0 ? (
                 selectedProducts.map((product) => (
@@ -75,6 +76,18 @@ export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientIn
                 )
             }
           </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4 border-t-2 pt-2">
+        <span className="font-bold">Descuento de compra (%)</span>
+        <div>
+          <Input placeholder="0"
+            type="number"
+            min={0}
+            max={99}
+            onChange={(e) => handleSetDiscount(Number(e.currentTarget.value))}
+          />
         </div>
       </div>
     </div >
