@@ -12,9 +12,10 @@ interface IProps {
   selectedProducts: ISelectedItem[]
   handleSelectedProduct: (product: ISelectedItem) => void
   handleItemQuantity: (id: number, quantity: number) => void
+  handleDeleteSelectedProduct: (id: number) => void
 }
 
-export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientInfo, selectedProducts, handleSelectedProduct, handleItemQuantity }: IProps) => {
+export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientInfo, selectedProducts, handleSelectedProduct, handleItemQuantity, handleDeleteSelectedProduct }: IProps) => {
   return (
     <div className="flex flex-col gap-4 w-full">
       <h3 className="font-bold">Detalles de Factura</h3>
@@ -61,6 +62,7 @@ export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientIn
                   product={product}
                   handleItemQuantity={handleItemQuantity}
                   key={product.id}
+                  handleDeleteSelectedProduct={handleDeleteSelectedProduct}
                 />
               ))
             )

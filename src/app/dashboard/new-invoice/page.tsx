@@ -101,6 +101,13 @@ export default function NewInvoicePage() {
     }));
   }
 
+  const handleDeleteSelectedProduct = (id: number) => {
+    setSelectedProducts((prevSelectedProducts) => ({
+      ...prevSelectedProducts,
+      products: prevSelectedProducts.products.filter((product) => product.id !== id && product)
+    }))
+  }
+
 
   const isNotSelectedProduct = (id: number | string) => selectedProducts?.products.find((product) => product.id === id)
 
@@ -118,6 +125,7 @@ export default function NewInvoicePage() {
           selectedProducts={selectedProducts?.products ? selectedProducts?.products : [] as any}
           handleSelectedProduct={handleSelectedProduct}
           handleItemQuantity={handleItemQuantity}
+          handleDeleteSelectedProduct={handleDeleteSelectedProduct}
         />
       </div>
     </div>
