@@ -55,6 +55,7 @@ const data: IProductInvoice[] = [
 export interface ISelectedProducts {
   products: ISelectedItem[]
   discount: number
+  tax: number
 }
 
 export interface ISelectedItem {
@@ -76,7 +77,8 @@ export default function NewInvoicePage() {
   })
   const [selectedProducts, setSelectedProducts] = useState<ISelectedProducts>({
     products: [],
-    discount: 0
+    discount: 0,
+    tax: 15
   })
 
   const handleSelectedProduct = (product: ISelectedItem) => {
@@ -109,17 +111,24 @@ export default function NewInvoicePage() {
   }
 
   const handleSetDiscount = (discount: number) => {
-    if (discount < 0) {
-      return toast.warning('El descuento debe ser mayor a 0')
-    }
-
-    if (discount > 99) {
-      return toast.warning('El descuento debe ser menor a 99')
+    if (discount < 0 || discount > 99) {
+      return toast.warning('El descuento debe estar entre (0 y 99)')
     }
 
     setSelectedProducts((prev) => ({
       ...prev,
       discount
+    }))
+  }
+
+  const handleSetTax = (tax: number) => {
+    if (tax < 15 || tax > 99) {
+      return toast.warning('El impuesto debe estar entre (15 y 99)')
+    }
+
+    setSelectedProducts((prev) => ({
+      ...prev,
+      tax
     }))
   }
 
@@ -137,11 +146,12 @@ export default function NewInvoicePage() {
           handleInputChangeClientInfo={handleInputChange}
           products={products}
           clientInfo={clientInfo}
-          selectedProducts={selectedProducts?.products ? selectedProducts?.products : [] as any}
+          selectedProducts={selectedProducts}
           handleSelectedProduct={handleSelectedProduct}
           handleItemQuantity={handleItemQuantity}
           handleDeleteSelectedProduct={handleDeleteSelectedProduct}
           handleSetDiscount={handleSetDiscount}
+          handleSetTax={handleSetTax}
         />
 
         <InvoicePreview
