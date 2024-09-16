@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input"
-import { IProductInvoice, ISelectedItem } from "../page"
+import { IProductInvoice, ISelectedItem, ISelectedProducts } from "../page"
 import { ChangeEvent } from "react"
 import { IClientInfo } from "../page"
 import { InputSearchProduct } from "./InputSearchProduct"
@@ -9,14 +9,15 @@ interface IProps {
   products: IProductInvoice[]
   handleInputChangeClientInfo: (target: ChangeEvent<HTMLInputElement>) => void
   clientInfo: IClientInfo
-  selectedProducts: ISelectedItem[]
+  selectedProducts: ISelectedProducts
   handleSelectedProduct: (product: ISelectedItem) => void
   handleItemQuantity: (id: number, quantity: number) => void
   handleDeleteSelectedProduct: (id: number) => void
   handleSetDiscount: (discount: number) => void
+  handleSetTax: (tax: number) => void
 }
 
-export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientInfo, selectedProducts, handleSelectedProduct, handleItemQuantity, handleDeleteSelectedProduct, handleSetDiscount }: IProps) => {
+export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientInfo, selectedProducts, handleSelectedProduct, handleItemQuantity, handleDeleteSelectedProduct, handleSetDiscount, handleSetTax }: IProps) => {
   return (
     <div className="flex flex-col gap-4 w-2/4">
       <h3 className="font-bold">Detalles de Factura</h3>
@@ -45,7 +46,7 @@ export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientIn
         <span className="font-bold">Productos</span>
         <div>
           <InputSearchProduct
-            selectedProducts={selectedProducts}
+            selectedProducts={selectedProducts.products}
             handleSelectedProduct={handleSelectedProduct}
             products={products}
           />
@@ -59,8 +60,8 @@ export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientIn
           </div>
           <div className="max-h-52 min-h-52 overflow-auto flex flex-col gap-2">
             {
-              selectedProducts.length > 0 ? (
-                selectedProducts.map((product) => (
+              selectedProducts.products.length > 0 ? (
+                selectedProducts.products.map((product) => (
                   <ItemSelectedProduct
                     product={product}
                     handleItemQuantity={handleItemQuantity}
@@ -79,17 +80,34 @@ export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientIn
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 border-t-2 pt-2">
-        <span className="font-bold">Descuento de compra (%)</span>
-        <div>
-          <Input placeholder="0"
-            type="number"
-            min={0}
-            max={99}
-            onChange={(e) => handleSetDiscount(Number(e.currentTarget.value))}
-          />
+      <div className="grid grid-cols-2  gap-4">
+        <div className="flex flex-col gap-4 border-t-2 pt-2">
+          <span className="font-bold">Impuesto (%)</span>
+          <div>
+            <Input placeholder="15"
+              type="number"
+              min={15}
+              max={99}
+              value={selectedProducts.tax}
+              onChange={(e) => handleSetTax(Number(e.currentTarget.value))}
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4 border-t-2 pt-2">
+          <span className="font-bold">Descuento de compra (%)</span>
+          <div>
+            <Input placeholder="0"
+              type="number"
+              min={0}
+              max={99}
+              value={selectedProducts.discount}
+              onChange={(e) => handleSetDiscount(Number(e.currentTarget.value))}
+            />
+          </div>
         </div>
       </div>
+
     </div >
   )
 }
