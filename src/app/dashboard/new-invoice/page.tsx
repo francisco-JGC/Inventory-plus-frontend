@@ -84,7 +84,6 @@ export default function NewInvoicePage() {
       return toast.warning('Este producto ya ha sido agregado')
     }
 
-    console.log({ product })
     const updatedProducts = [...selectedProducts.products, product];
 
     setSelectedProducts({
@@ -109,6 +108,21 @@ export default function NewInvoicePage() {
     }))
   }
 
+  const handleSetDiscount = (discount: number) => {
+    if (discount < 0) {
+      return toast.warning('El descuento debe ser mayor a 0')
+    }
+
+    if (discount > 99) {
+      return toast.warning('El descuento debe ser menor a 99')
+    }
+
+    setSelectedProducts((prev) => ({
+      ...prev,
+      discount
+    }))
+  }
+
 
   const isNotSelectedProduct = (id: number | string) => selectedProducts?.products.find((product) => product.id === id)
 
@@ -127,6 +141,7 @@ export default function NewInvoicePage() {
           handleSelectedProduct={handleSelectedProduct}
           handleItemQuantity={handleItemQuantity}
           handleDeleteSelectedProduct={handleDeleteSelectedProduct}
+          handleSetDiscount={handleSetDiscount}
         />
 
         <InvoicePreview
