@@ -12,8 +12,8 @@ interface IProps {
 
 export const ItemSelectedProduct = ({ product, handleItemQuantity, handleDeleteSelectedProduct }: IProps) => {
   return (
-    <div className="w-full border p-2 rounded-lg font-bold grid grid-cols-5 gap-4">
-      <span className="font-bold col-span-2">{product.product_name}</span>
+    <div className="w-full border p-2 rounded-lg grid grid-cols-5 gap-4">
+      <span className="col-span-2">{product.product_name}</span>
       <Input
         value={product.quantity}
         type="number"
