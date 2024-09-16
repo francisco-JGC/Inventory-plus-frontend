@@ -3,6 +3,7 @@ import { IProductInvoice, ISelectedItem } from "../page"
 import { ChangeEvent } from "react"
 import { IClientInfo } from "../page"
 import { InputSearchProduct } from "./InputSearchProduct"
+import { ItemSelectedProduct } from "./itemSelectedProduct"
 
 interface IProps {
   products: IProductInvoice[]
@@ -47,10 +48,30 @@ export const InvoiceDetails = ({ products, handleInputChangeClientInfo, clientIn
             products={products}
           />
         </div>
-        {
-
-        }
+        <div className="flex flex-col gap-2 max-w-[450px]">
+          <div className="w-full flex justify-between gap-4 mb-2">
+            <span className="font-bold text-gray-600 w-2/4">Item</span>
+            <span className="font-bold text-gray-600 w-2/4">Cantidad</span>
+            <span className="font-bold text-gray-600 w-2/4">Precio U.</span>
+          </div>
+          {
+            selectedProducts.length > 0 ? (
+              selectedProducts.map((product) => (
+                <ItemSelectedProduct
+                  product={product}
+                  handleItemQuantity={handleItemQuantity}
+                  key={product.id}
+                />
+              ))
+            )
+              : (
+                <div>
+                  <span className="text-gray-400">No se han seleccionado productos</span>
+                </div>
+              )
+          }
+        </div>
       </div>
-    </div>
+    </div >
   )
 }
