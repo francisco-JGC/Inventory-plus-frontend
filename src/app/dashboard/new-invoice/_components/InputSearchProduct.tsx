@@ -29,7 +29,6 @@ interface IProps {
 
 export function InputSearchProduct({ selectedProducts, products, handleSelectedProduct }: IProps) {
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState("")
 
   return (
     <div className="w-full">
