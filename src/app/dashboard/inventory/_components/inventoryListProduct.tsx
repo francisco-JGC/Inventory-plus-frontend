@@ -155,7 +155,7 @@ export const InventoryListProduct = () => {
     <div className='bg-white p-4 shadow rounded flex flex-col gap-4'>
       <div>
         <Button className='bg-indigo-500'>
-          <Link href={'#'}>
+          <Link href={'/dashboard/inventory/add-product'}>
             Agregar Nuevo Producto
           </Link>
         </Button>
