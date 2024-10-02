@@ -6,8 +6,11 @@ import { useState, useEffect } from "react";
 import { AddCategory, ICategory } from "./_components/addCategory";
 import { Modal } from "@/components/modal";
 import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { createProduct } from "@/services/product";
 
-interface ICreateProduct {
+export interface ICreateProduct {
   product_name: string
   description?: string
   price: number
@@ -24,6 +27,18 @@ export default function AddProductPage() {
 
   const handleAddCategory = (category: ICategory) => {
     setCategories((prev) => [...prev, category])
+  }
+
+  const handleAddProduct = async () => {
+    const response = await createProduct(formValues)
+    toast.dismiss()
+
+    if (!response.success) {
+      return toast.error('Hubo un error al crear el producto')
+    }
+
+    toast.success('Se ha creado el producto')
+    resetForm()
   }
 
   return (
@@ -99,10 +114,6 @@ export default function AddProductPage() {
       </div>
 
       <div className="bg-white rounded-sm shadow p-4 flex flex-col gap-6 w-full">
-        <div>
-          <span>Categoria</span>
-        </div>
-
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-2">
             <label className="font-medium  text-gray-400">Categoria</label>
@@ -155,6 +166,12 @@ export default function AddProductPage() {
           </div>
         </div>
       </div>
-    </div >
+
+      <div>
+        <Button onClick={handleAddProduct}>
+          Crear producto
+        </Button>
+      </div>
+    </div>
   );
 }
