@@ -7,7 +7,7 @@ interface FetchDataParams<T> {
   useToken?: boolean
 }
 
-interface IHandleResponse<T = unknown> {
+export interface IHandleResponse<T = unknown> {
   message?: string
   data?: T
   success: boolean
