@@ -7,12 +7,18 @@ interface FetchDataParams<T> {
   useToken?: boolean
 }
 
+interface IHandleResponse<T = unknown> {
+  message?: string
+  data?: T
+  success: boolean
+}
+
 export async function fetchData<TResponse, TData = any>({
   url,
   method,
   data,
   useToken = false,
-}: FetchDataParams<TData>): Promise<TResponse> {
+}: FetchDataParams<TData>): Promise<IHandleResponse> {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
   }
