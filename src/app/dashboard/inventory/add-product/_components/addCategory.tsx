@@ -33,7 +33,7 @@ export const AddCategory = ({ handleAddCategory }: IProps) => {
     toast.dismiss()
 
     if (!response.success) {
-      toast.error('Hubo un error al crear la categoria', {
+      return toast.error('Hubo un error al crear la categoria', {
         description: 'Por favor vuelva a intentarlo'
       })
     }
