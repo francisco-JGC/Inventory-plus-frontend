@@ -3,34 +3,28 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import useForm from "@/hooks/useForm";
 import { useState, useEffect } from "react";
+import { AddCategory, ICategory } from "./_components/addCategory";
+import { Modal } from "@/components/modal";
+import { Plus } from "lucide-react";
 
 interface ICreateProduct {
-  product_name: string //
-  description?: string //
-  price: number //
-  stock: number // 
+  product_name: string
+  description?: string
+  price: number
+  stock: number
   category_name: string
-  discount?: number //
+  discount?: number
   status: 'show' | 'hide'
-  low_stock_limit: number //
+  low_stock_limit: number
 }
 
 export default function AddProductPage() {
   const { formValues, handleInputChange, resetForm } = useForm<ICreateProduct>({} as any)
-  const CATEGORYITEMS = [
-    {
-      name: 'categoria 1'
-    },
-    {
-      name: 'categoria 2'
-    }
-    , {
-      name: 'categoria 3'
-    }
-    , {
-      name: 'categoria 4'
-    }
-  ]
+  const [categories, setCategories] = useState<ICategory[]>([])
+
+  const handleAddCategory = (category: ICategory) => {
+    setCategories((prev) => [...prev, category])
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -123,9 +117,20 @@ export default function AddProductPage() {
             >
               <option value="" selected disabled>Seleccione una categoria</option>
               {
-                CATEGORYITEMS.map((item: { name: string }, index: number) => (<option key={index} value={item.name}>{item.name}</option>))
+                categories.map((item: { name: string }, index: number) => (<option key={index} value={item.name}>{item.name}</option>))
               }
             </select>
+
+            <div className="text-blue-500 font-bold">
+              <Modal
+                className="mt-2"
+                nameButton="Crear categoria"
+                title="Nueva Categoria"
+                description="Crea una categoria para diferenciar los productos de tu inventario"
+                Component={() => <AddCategory handleAddCategory={handleAddCategory} />}
+                Icon={Plus}
+              />
+            </div>
           </div>
 
           <div className="flex items-center space-x-2">
