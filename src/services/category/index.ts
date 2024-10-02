@@ -16,3 +16,11 @@ export const createCategory = async (
     useToken: true,
   })
 }
+
+export const getCategories = async (): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: '/category/',
+    method: 'GET',
+    useToken: true,
+  })
+}

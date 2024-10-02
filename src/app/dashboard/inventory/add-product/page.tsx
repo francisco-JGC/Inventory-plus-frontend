@@ -9,6 +9,7 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { createProduct } from "@/services/product";
+import { getCategories } from "@/services/category";
 
 export interface ICreateProduct {
   product_name: string
@@ -40,6 +41,15 @@ export default function AddProductPage() {
     toast.success('Se ha creado el producto')
     resetForm()
   }
+
+  useEffect(() => {
+    getCategories()
+      .then((response) => {
+        if (response.success) {
+          setCategories(response.data as ICategory[])
+        }
+      })
+  }, [])
 
   return (
     <div className="flex flex-col gap-4">
