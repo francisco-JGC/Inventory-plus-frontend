@@ -7,15 +7,17 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ISearch } from '../../_types/pagination'
 import { IProduct } from '../../inventory/_components/inventoryListProduct'
+import { AddProvider } from './addProvider'
+import { Modal } from '@/components/modal'
 
 export type IProvider = {
-  id: number
+  id?: number
   name: string,
   email: string
   phone: string
   address: string
   products?: IProduct[]
-  created_at: Date | string
+  created_at?: Date | string
 }
 
 const data: IProvider[] = [
@@ -55,6 +57,7 @@ export const ProvidersList = () => {
   const { formValues: search, handleInputChange } = useForm<ISearch>({
     search: ''
   })
+  const [providers, setProviders] = useState<IProvider[]>([])
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [loading, setLoading] = useState<boolean>(false)
   const [pagination, setPagination] = useState({
@@ -81,14 +84,21 @@ export const ProvidersList = () => {
     }
   }
 
+  const handleAddProvider = (provider: IProvider) =>
+    setProviders(prevProviders => [...prevProviders, provider])
+
   return (
     <div className='bg-white p-4 shadow rounded flex flex-col gap-4'>
       <div>
-        <Button className='bg-indigo-500'>
-          <Link href={'#'}>
+        <Modal
+          Component={() => <AddProvider handleAddProvider={handleAddProvider} />}
+          title='Nuevo proveedor'
+          description='Por favor llene todos los campos requeridos'
+        >
+          <Button>
             Agregar Nuevo Proveedor
-          </Link>
-        </Button>
+          </Button>
+        </Modal>
       </div>
       <DataTable<IProvider>
         columns={ColumnsListUsers}

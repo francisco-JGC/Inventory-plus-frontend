@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import useForm from "@/hooks/useForm"
 import { createCategory } from "@/services/category"
-import { fetchData } from "@/utils/fetch-data"
 import { FormEvent } from "react"
 import { toast } from "sonner"
 
