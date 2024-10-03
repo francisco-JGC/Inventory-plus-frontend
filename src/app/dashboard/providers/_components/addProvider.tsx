@@ -39,7 +39,7 @@ export const AddProvider = ({ handleAddProvider }: IProps) => {
       return toast.error('Hubo un error al crear el Proveedor')
     }
     toast.success('Proveedor creado')
-    handleAddProvider({ ...formValues })
+    handleAddProvider(response.data as any)
     resetForm()
   }
 
