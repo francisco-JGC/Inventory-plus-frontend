@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import useForm from "@/hooks/useForm"
-import { createCategory } from "@/services/category"
+import { createProvider } from "@/services/provider"
 import { FormEvent } from "react"
 import { toast } from "sonner"
 
@@ -32,7 +32,7 @@ export const AddProvider = ({ handleAddProvider }: IProps) => {
     }
     toast.loading('Creando Proveedor...')
 
-    const response = await createCategory(formValues)
+    const response = await createProvider(formValues)
     toast.dismiss()
 
     if (!response.success) {

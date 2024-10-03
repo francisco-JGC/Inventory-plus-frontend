@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { createProduct } from "@/services/product";
 import { getCategories } from "@/services/category";
+import { IProvider } from "../../providers/_components/providersList";
+import { getAllProvider } from "@/services/provider";
 
 export interface ICreateProduct {
   product_name: string
@@ -18,6 +20,7 @@ export interface ICreateProduct {
   stock: number
   category_name: string
   discount?: number
+  provider_name: string
   status: 'show' | 'hide'
   low_stock_limit: number
 }
@@ -25,6 +28,7 @@ export interface ICreateProduct {
 export default function AddProductPage() {
   const { formValues, handleInputChange, resetForm } = useForm<ICreateProduct>({} as any)
   const [categories, setCategories] = useState<ICategory[]>([])
+  const [providers, setProviders] = useState<IProvider[]>([])
 
   const handleAddCategory = (category: ICategory) => {
     setCategories((prev) => [...prev, category])
@@ -43,12 +47,17 @@ export default function AddProductPage() {
   }
 
   useEffect(() => {
-    getCategories()
-      .then((response) => {
-        if (response.success) {
-          setCategories(response.data as ICategory[])
-        }
-      })
+    getCategories().then((response) => {
+      if (response.success) {
+        setCategories(response.data as ICategory[])
+      }
+    })
+
+    getAllProvider().then(respose => {
+      if (respose.success) {
+        setProviders(respose.data as IProvider[])
+      }
+    })
   }, [])
 
   return (
@@ -152,6 +161,24 @@ export default function AddProductPage() {
                 Icon={Plus}
               />
             </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="font-medium  text-gray-400">Proveedor</label>
+
+            <select
+              name="provider_name"
+              onChange={(e) => handleInputChange(e as any)}
+              value={formValues.provider_name}
+              className=
+              "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+
+            >
+              <option value="" selected disabled>Seleccione un proveedor</option>
+              {
+                providers.map((item: { name: string }, index: number) => (<option key={index} value={item.name}>{item.name}</option>))
+              }
+            </select>
           </div>
 
           <div className="flex items-center space-x-2">
