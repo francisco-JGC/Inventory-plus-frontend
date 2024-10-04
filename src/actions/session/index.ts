@@ -7,7 +7,7 @@ export const login = async (
   password: string,
 ): Promise<boolean> => {
   try {
-    const response = await fetchData<any>({
+    const response = await fetchData({
       url: '/auth/login',
       method: 'POST',
       data: { email, password },
@@ -23,7 +23,8 @@ export const login = async (
     }
 
     toast.success('Inicio de sesión exitoso!')
-    setCookie('token', response.data.token)
+    const { data } = response as { data: any }
+    setCookie('token', data.token)
     return true
   } catch (error) {
     toast.error('Error al iniciar sesión', {
