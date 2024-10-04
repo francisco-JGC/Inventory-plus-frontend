@@ -1,14 +1,16 @@
 'use client'
 import { DataTable } from '@/components/dataTable'
-import { ColumnsListUsers } from './providersListColumns'
+import { ColumnListProviders } from './providersListColumns'
 import useForm from '@/hooks/useForm'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ISearch } from '../../_types/pagination'
 import { IProduct } from '../../inventory/_components/inventoryListProduct'
 import { AddProvider } from './addProvider'
 import { Modal } from '@/components/modal'
+import { getPaginationProvider } from '@/services/provider'
+import { toast } from 'sonner'
 
 export type IProvider = {
   id?: number
@@ -87,6 +89,31 @@ export const ProvidersList = () => {
   const handleAddProvider = (provider: IProvider) =>
     setProviders(prevProviders => [...prevProviders, provider])
 
+  useEffect(() => {
+    setLoading(true)
+    const timeOut = setTimeout(() => {
+      getPaginationProvider({ page: currentPage, filter: search.search, limit: 10 })
+        .then((data: any) => {
+          if (data.success) {
+            setProviders(data.data)
+            setPagination({
+              current_page: pagination.current_page,
+              total_pages: pagination.total_pages,
+              total_data: pagination.total_data,
+            })
+          } else {
+            toast.error('No se pudieron cargar los registros')
+          }
+        })
+        .finally(() => {
+          toast.dismiss()
+          setLoading(false)
+        })
+    }, 700)
+
+    return () => clearTimeout(timeOut)
+  }, [search.search, currentPage])
+
   return (
     <div className='bg-white p-4 shadow rounded flex flex-col gap-4'>
       <div>
@@ -101,9 +128,9 @@ export const ProvidersList = () => {
         </Modal>
       </div>
       <DataTable<IProvider>
-        columns={ColumnsListUsers}
-        data={data}
-        search_by='email'
+        columns={ColumnListProviders}
+        data={providers}
+        search_by='name'
         searchValue={search.search}
         handleSearch={handleInputChange}
         handleNextPage={handleNextPage}
@@ -114,9 +141,10 @@ export const ProvidersList = () => {
         search_placeholder="Buscar nombre del proveedor"
         filter_columns={{
           email: 'Correo Electronico',
-          username: 'Nombre de usuario',
-          status: 'Estado',
-          created_at: 'Fecha de creación',
+          name: 'Nombre de usuario',
+          address: 'Dirección',
+          phone: 'Telefono',
+          product_length: 'Fecha de creación',
         }}
       />
     </div>

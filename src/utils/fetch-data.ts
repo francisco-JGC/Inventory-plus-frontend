@@ -13,6 +13,12 @@ export interface IHandleResponse<T = unknown> {
   success: boolean
 }
 
+export interface IPagination {
+  filter?: string
+  page: number
+  limit: number
+}
+
 export async function fetchData<TResponse, TData = any>({
   url,
   method,

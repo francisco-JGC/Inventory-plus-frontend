@@ -5,7 +5,7 @@ import { IProvider } from "./providersList"
 import { DateFormat } from "@/utils/date-format"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
-export const ColumnsListUsers: ColumnDef<IProvider>[] = [
+export const ColumnListProviders: ColumnDef<IProvider>[] = [
   {
     accessorKey: "email",
     header: ({ column }) => {
@@ -22,31 +22,31 @@ export const ColumnsListUsers: ColumnDef<IProvider>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
   {
-    accessorKey: "username",
+    accessorKey: "name",
     header: "Nombre de usuario",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("username")}</div>
+      <div className="capitalize">{row.getValue("name")}</div>
     ),
   },
   {
-    accessorKey: "status",
-    header: "Estado",
+    accessorKey: "address",
+    header: "Dirección",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status") ? 'Activo' : 'Inactivo'}</div>
+      <div className="capitalize">{row.getValue("address")}</div>
     ),
   },
   {
-    accessorKey: "created_at",
-    header: "Fecha de creación",
+    accessorKey: "phone",
+    header: "Telefono",
     cell: ({ row }) => {
-      return <div className="capitalize">{DateFormat(row.getValue("created_at"))}</div>
+      return <div className="capitalize">{row.getValue("phone")}</div>
     },
   },
   {
-    accessorKey: "rol",
-    header: () => <div className="text-right">Rol</div>,
+    accessorKey: "product_length",
+    header: () => <div className="text-right">Productos</div>,
     cell: ({ row }) => {
-      return <div className="text-right font-medium">{row.getValue("rol")}</div>
+      return <div className="text-right font-medium">{row.getValue("product_length")}</div>
     },
   },
   {
