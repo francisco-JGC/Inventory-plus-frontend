@@ -9,7 +9,7 @@ import { ISearch } from '../../_types/pagination'
 import { IProduct } from '../../inventory/_components/inventoryListProduct'
 import { AddProvider } from './addProvider'
 import { Modal } from '@/components/modal'
-import { getPaginationProvider } from '@/services/provider'
+import { deleteProviderById, getPaginationProvider } from '@/services/provider'
 import { toast } from 'sonner'
 
 export type IProvider = {
@@ -89,6 +89,22 @@ export const ProvidersList = () => {
   const handleAddProvider = (provider: IProvider) =>
     setProviders(prevProviders => [...prevProviders, provider])
 
+  const handleDeleteProvider = async (id: number) => {
+    toast.loading('Eliminando proveedor...')
+
+    const response = await deleteProviderById(id)
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Proveedor eliminado con exito!')
+      setProviders(prevProviders => prevProviders.filter((item) => item.id !== id))
+    } else {
+      toast.error('Hubo un error al eliminar el proveedor', {
+        description: 'Vuelva a intenarlo'
+      })
+    }
+  }
+
   useEffect(() => {
     setLoading(true)
     const timeOut = setTimeout(() => {
@@ -128,7 +144,7 @@ export const ProvidersList = () => {
         </Modal>
       </div>
       <DataTable<IProvider>
-        columns={ColumnListProviders}
+        columns={ColumnListProviders({ onDelete: handleDeleteProvider })}
         data={providers}
         search_by='search'
         searchValue={search.search}

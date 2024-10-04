@@ -36,3 +36,14 @@ export const getPaginationProvider = async ({
     useToken: true,
   })
 }
+
+export const deleteProviderById = async (id: number) => {
+  return await fetchData({
+    url: '/provider/delete',
+    method: 'POST',
+    data: {
+      id,
+    },
+    useToken: true,
+  })
+}
