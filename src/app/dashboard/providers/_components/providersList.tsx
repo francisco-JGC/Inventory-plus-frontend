@@ -130,7 +130,7 @@ export const ProvidersList = () => {
       <DataTable<IProvider>
         columns={ColumnListProviders}
         data={providers}
-        search_by='name'
+        search_by='search'
         searchValue={search.search}
         handleSearch={handleInputChange}
         handleNextPage={handleNextPage}

@@ -102,7 +102,7 @@ export function DataTable<T>({
         <Input
           placeholder={search_placeholder ?? 'Buscar'}
           value={searchValue}
-          onChange={(e) => handleSearch(e.target)}
+          onChange={handleSearch}
           className="max-w-sm"
           name="search"
         />
