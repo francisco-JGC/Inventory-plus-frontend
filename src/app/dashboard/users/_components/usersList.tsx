@@ -2,13 +2,15 @@
 import { DataTable } from '@/components/dataTable'
 import { ColumnsListUsers } from './usersListColumns'
 import useForm from '@/hooks/useForm'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ISearch } from '../../_types/pagination'
+import { toast } from 'sonner'
+import { deleteUserById, getPaginationUser } from '@/services/user'
 
-export type IUsers = {
-  id: number | string
+export type IUser = {
+  id: number
   username: string,
   email: string
   status: boolean
@@ -16,93 +18,12 @@ export type IUsers = {
   created_at: Date | string
 }
 
-const data: IUsers[] = [
-  {
-    id: "m5gr84i9",
-    status: true,
-    email: "ken99@yahoo.com",
-    username: 'username',
-    rol: 'administrator',
-    created_at: Date(),
-  },
-  {
-    id: "3u1reuv4",
-    status: true,
-    email: "Abe45@gmail.com",
-    username: 'username',
-    rol: 'administrator',
-    created_at: Date(),
-  },
-  {
-    id: "derv1ws0",
-    status: false,
-    email: "Monserrat44@gmail.com",
-    username: 'username',
-    rol: 'administrator',
-    created_at: Date(),
-  },
-  {
-    id: "5kma53ae",
-    status: true,
-    email: "Silas22@gmail.com",
-    username: 'username',
-    rol: 'administrator',
-    created_at: Date(),
-  },
-  {
-    id: "bhqecj4p",
-    status: false,
-    email: "carmella@hotmail.com",
-    username: 'username',
-    rol: 'administrator',
-    created_at: Date(),
-  },
-  {
-    id: "m5gr84i9",
-    status: true,
-    email: "ken99@yahoo.com",
-    username: 'username',
-    rol: 'administrator',
-    created_at: Date(),
-  },
-  {
-    id: "3u1reuv4",
-    status: true,
-    email: "Abe45@gmail.com",
-    username: 'username',
-    rol: 'administrator',
-    created_at: Date(),
-  },
-  {
-    id: "derv1ws0",
-    status: false,
-    email: "Monserrat44@gmail.com",
-    username: 'username',
-    rol: 'administrator',
-    created_at: Date(),
-  },
-  {
-    id: "5kma53ae",
-    status: true,
-    email: "Silas22@gmail.com",
-    username: 'username',
-    rol: 'administrator',
-    created_at: Date(),
-  },
-  {
-    id: "bhqecj4p",
-    status: false,
-    email: "carmella@hotmail.com",
-    username: 'username',
-    rol: 'administrator',
-    created_at: Date(),
-  },
-]
 
 export const UsersList = () => {
   const { formValues: search, handleInputChange } = useForm<ISearch>({
     search: ''
   })
+  const [users, setUsers] = useState<IUser[]>([])
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [loading, setLoading] = useState<boolean>(false)
   const [pagination, setPagination] = useState({
@@ -129,6 +50,50 @@ export const UsersList = () => {
     }
   }
 
+  const handleAddUser = (user: IUser) =>
+    setUsers(prevUser => [...prevUser, user])
+
+  const handleDeleteuser = async (id: number) => {
+    toast.loading('Eliminando proveedor...')
+
+    const response = await deleteUserById(id)
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Proveedor eliminado con exito!')
+      setUsers(prevUser => prevUser.filter((item) => item.id !== id))
+    } else {
+      toast.error('Hubo un error al eliminar el proveedor', {
+        description: 'Vuelva a intenarlo'
+      })
+    }
+  }
+
+  useEffect(() => {
+    setLoading(true)
+    const timeOut = setTimeout(() => {
+      getPaginationUser({ page: currentPage, filter: search.search, limit: 10 })
+        .then((data: any) => {
+          if (data.success) {
+            setUsers(data.data)
+            setPagination({
+              current_page: pagination.current_page,
+              total_pages: pagination.total_pages,
+              total_data: pagination.total_data,
+            })
+          } else {
+            toast.error('No se pudieron cargar los registros')
+          }
+        })
+        .finally(() => {
+          toast.dismiss()
+          setLoading(false)
+        })
+    }, 700)
+
+    return () => clearTimeout(timeOut)
+  }, [search.search, currentPage])
+
   return (
     <div className='bg-white p-4 shadow rounded flex flex-col gap-4'>
       <div>
@@ -138,9 +103,9 @@ export const UsersList = () => {
           </Link>
         </Button>
       </div>
-      <DataTable<IUsers>
-        columns={ColumnsListUsers}
-        data={data}
+      <DataTable<IUser>
+        columns={ColumnsListUsers({ onDelete: handleDeleteuser })}
+        data={users}
         search_by='email'
         searchValue={search.search}
         handleSearch={handleInputChange}
@@ -153,7 +118,7 @@ export const UsersList = () => {
         filter_columns={{
           email: 'Correo Electronico',
           username: 'Nombre de usuario',
-          rol: 'Rol',
+          role: 'Rol',
           status: 'Estado',
           created_at: 'Fecha de creación',
         }}
