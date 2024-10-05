@@ -1,6 +1,6 @@
 import { fetchData } from '@/utils/fetch-data'
 import { toast } from 'sonner'
-import { setCookie } from 'cookies-next'
+import { deleteCookie, setCookie } from 'cookies-next'
 
 export const login = async (
   email: string,
@@ -25,6 +25,9 @@ export const login = async (
     toast.success('Inicio de sesión exitoso!')
     const { data } = response as { data: any }
     setCookie('token', data.token)
+    setCookie('username', data.username)
+    setCookie('email', data.email)
+    setCookie('role', data.role)
     return true
   } catch (error) {
     toast.error('Error al iniciar sesión', {
@@ -34,9 +37,20 @@ export const login = async (
   }
 }
 
-export const logout = (): void => {
-  localStorage.removeItem('authToken')
-  localStorage.removeItem('user')
+export const logout = (): boolean => {
+  try {
+    deleteCookie('token')
+    deleteCookie('username')
+    deleteCookie('email')
+    deleteCookie('role')
+
+    toast.success('Sesión cerrada exitosamente')
+
+    return true
+  } catch (error) {
+    toast.error('Error al cerrar sesión')
+    return false
+  }
 }
 
 export const getSession = () => {

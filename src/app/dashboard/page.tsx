@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+'use client'
 import { StatisticData } from "./_components/statisticData";
 import { FluctuationChart } from "./_components/fluctuationChart";
 import { ActionsLinks } from "./_components/actionsLinks";

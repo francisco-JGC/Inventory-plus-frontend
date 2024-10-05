@@ -6,6 +6,8 @@ import profileIcon from "@/assets/icons/profile.png";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { logout } from "@/actions/session";
+import { useRouter } from "next/navigation";
 
 interface ISidebarItemProps {
   children: React.ReactNode
@@ -16,6 +18,8 @@ export const SidebarContext = createContext({ expanded: true });
 
 export const Sidebar = ({ children, className }: ISidebarItemProps) => {
   const [expanded, setExpanded] = useState(true);
+
+  const router = useRouter()
 
   return (
     <aside className={`h-screen bg-white border-r shadow-sm transition-all ${className && className} ${expanded ? "w-[260px]" : "w-[70px]"}`}>
@@ -69,14 +73,22 @@ export const Sidebar = ({ children, className }: ISidebarItemProps) => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <DropdownMenuLabel>
+                  <DropdownMenuLabel
+                    onClick={(e) => {
+                      const response = logout()
+
+                      if (response) {
+                        router.push('/login')
+                      }
+                    }}
+                    className="cursor-pointer"
+                  >
                     Cerrar Sesión
                   </DropdownMenuLabel>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-
         </div>
       </nav>
     </aside >
