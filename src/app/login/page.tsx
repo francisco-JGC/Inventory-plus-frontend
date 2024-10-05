@@ -30,6 +30,7 @@ export default function LoginPage() {
     toast.loading('Iniciando sesión...')
 
     const response = await login(formValues.email, formValues.password)
+    toast.dismiss()
 
     if (response) {
       router.push('/dashboard')
@@ -73,9 +74,6 @@ export default function LoginPage() {
           </Button>
         </form>
 
-        <div className="mt-4 text-center">
-          <a href="#" className="text-sm text-indigo-600 hover:underline">Olvidates tu contraseña?</a>
-        </div>
       </div >
     </div >
   );
