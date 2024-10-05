@@ -1,8 +1,9 @@
+import { UserType } from '@/app/dashboard/users/_components/addUser'
 import { IUser } from '@/app/dashboard/users/_components/usersList'
 import { fetchData, IHandleResponse, IPagination } from '@/utils/fetch-data'
 import { toast } from 'sonner'
 
-export const createUser = async (user: IUser): Promise<IHandleResponse> => {
+export const createUser = async (user: UserType): Promise<IHandleResponse> => {
   toast.loading('Creando usuario', {
     description: 'Espere un momento...',
   })

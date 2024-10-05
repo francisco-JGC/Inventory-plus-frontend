@@ -68,7 +68,12 @@ export const ColumnsListUsers = ({ onDelete }: IColumns): ColumnDef<IUser>[] => 
               <DropdownMenuItem>Modificar Información</DropdownMenuItem>
               <DropdownMenuItem>Cambiar Permisos</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-400">
+              <DropdownMenuItem className="text-red-400"
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}
+              >
                 <AlertDialogModal
                   nameButton="Eliminar usuario"
                   title="¿Estás seguro de eliminar este usuario?"

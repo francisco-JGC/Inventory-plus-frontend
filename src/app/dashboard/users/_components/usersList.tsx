@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button'
 import { ISearch } from '../../_types/pagination'
 import { toast } from 'sonner'
 import { deleteUserById, getPaginationUser } from '@/services/user'
+import { Modal } from '@/components/modal'
+import { AddUser } from './addUser'
 
 export type IUser = {
   id: number
@@ -54,16 +56,16 @@ export const UsersList = () => {
     setUsers(prevUser => [...prevUser, user])
 
   const handleDeleteuser = async (id: number) => {
-    toast.loading('Eliminando proveedor...')
+    toast.loading('Eliminando usuario...')
 
     const response = await deleteUserById(id)
     toast.dismiss()
 
     if (response.success) {
-      toast.success('Proveedor eliminado con exito!')
+      toast.success('Usuario eliminado con exito!')
       setUsers(prevUser => prevUser.filter((item) => item.id !== id))
     } else {
-      toast.error('Hubo un error al eliminar el proveedor', {
+      toast.error('Hubo un error al eliminar el usuario', {
         description: 'Vuelva a intenarlo'
       })
     }
@@ -97,11 +99,15 @@ export const UsersList = () => {
   return (
     <div className='bg-white p-4 shadow rounded flex flex-col gap-4'>
       <div>
-        <Button className='bg-indigo-500'>
-          <Link href={'#'}>
+        <Modal
+          Component={() => <AddUser handleAddUser={handleAddUser} />}
+          title='Nuevo Usuario'
+          description='Por favor llene todos los campos requeridos'
+        >
+          <Button>
             Agregar Nuevo Usuario
-          </Link>
-        </Button>
+          </Button>
+        </Modal>
       </div>
       <DataTable<IUser>
         columns={ColumnsListUsers({ onDelete: handleDeleteuser })}
