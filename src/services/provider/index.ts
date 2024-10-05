@@ -47,3 +47,20 @@ export const deleteProviderById = async (id: number) => {
     useToken: true,
   })
 }
+
+export const getProviderById = async (id: number) => {
+  return await fetchData({
+    url: `/provider/${id}`,
+    method: 'GET',
+    useToken: true,
+  })
+}
+
+export const updateProviderById = async (provider: IProvider, id: number) => {
+  return await fetchData({
+    url: `/provider/update/${id}`,
+    method: 'POST',
+    data: provider,
+    useToken: true,
+  })
+}

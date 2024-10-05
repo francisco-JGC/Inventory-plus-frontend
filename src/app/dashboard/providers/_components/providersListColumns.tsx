@@ -4,12 +4,15 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { IProvider } from "./providersList"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { AlertDialogModal } from "@/components/alertDialogModal"
+import { useRouter } from "next/navigation"
 
 type IColumns = {
   onDelete: (id: number) => void
 }
 
 export const ColumnListProviders = ({ onDelete }: IColumns): ColumnDef<IProvider>[] => {
+  const router = useRouter()
+
   return [
     {
       accessorKey: "email",
@@ -71,7 +74,9 @@ export const ColumnListProviders = ({ onDelete }: IColumns): ColumnDef<IProvider
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Acciones</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Modificar Información</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => (router.push(`/dashboard/providers/update/${provider.id}`))}
+              >Modificar Información</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-red-400"
                 onClick={(e) => {
