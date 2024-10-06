@@ -5,12 +5,14 @@ import { IUser } from "./usersList"
 import { DateFormat } from "@/utils/date-format"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { AlertDialogModal } from "@/components/alertDialogModal"
+import { useRouter } from "next/navigation"
 
 type IColumns = {
   onDelete: (id: number) => void
 }
 
 export const ColumnsListUsers = ({ onDelete }: IColumns): ColumnDef<IUser>[] => {
+  const router = useRouter()
   return [
     {
       accessorKey: "email",
@@ -65,7 +67,9 @@ export const ColumnsListUsers = ({ onDelete }: IColumns): ColumnDef<IUser>[] => 
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Acciones</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Modificar Información</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => router.push(`/dashboard/users/update/${user.id}`)}
+              >Modificar Información</DropdownMenuItem>
               <DropdownMenuItem>Cambiar Permisos</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-red-400"

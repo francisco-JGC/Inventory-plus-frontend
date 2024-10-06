@@ -55,7 +55,7 @@ export const getUserById = async (id: number) => {
   })
 }
 
-export const updateUserById = async (user: IUser, id: number) => {
+export const updateUserById = async (user: UserType, id: number) => {
   return await fetchData({
     url: `/users/update/${id}`,
     method: 'POST',

@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image";
 import { createContext, useState } from "react";
-import { ChevronFirst, ChevronLast, MoreVertical } from "lucide-react";
+import { ChevronFirst, ChevronLast, LogOut, MoreVertical } from "lucide-react";
 import profileIcon from "@/assets/icons/profile.png";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { Button } from "../ui/button";
@@ -62,33 +62,17 @@ export const Sidebar = ({ children, className }: ISidebarItemProps) => {
               <h4 className="font-semibold">{getCookie('username')}</h4>
               <span className="text-xs text-gray-600">{getCookie('email')}</span>
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant={"outline"} className="border-none"><MoreVertical size={20} /></Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white shadow p-4 flex flex-col gap-1">
-                <DropdownMenuItem>
-                  <Link href={`/dashboard/profile`}>
-                    Ver Perfil
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <DropdownMenuLabel
-                    onClick={(e) => {
-                      const response = logout()
+            <div>
+              <LogOut className="text-red-400 cursor-pointer"
+                onClick={(e) => {
+                  const response = logout()
 
-                      if (response) {
-                        router.push('/login')
-                      }
-                    }}
-                    className="cursor-pointer"
-                  >
-                    Cerrar Sesión
-                  </DropdownMenuLabel>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  if (response) {
+                    router.push('/login')
+                  }
+                }}
+              />
+            </div>
           </div>
         </div>
       </nav>
