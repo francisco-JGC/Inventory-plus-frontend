@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import useForm from "@/hooks/useForm";
 import { InvoicePreview } from "./_components/invoicePreview";
 import { getAllProducts } from "@/services/product";
+import { Button } from "@/components/ui/button";
 
 export interface IProductInvoice {
   id: number
@@ -97,6 +98,35 @@ export default function NewInvoicePage() {
 
   const isNotSelectedProduct = (id: number | string) => selectedProducts?.products.find((product) => product.id === id)
 
+  const calculateTotal = () => {
+    const subTotal = selectedProducts.products.reduce((acc, product) => {
+      return acc + product.price * product.quantity;
+    }, 0);
+
+    const discountAmount = (subTotal * selectedProducts.discount) / 100;
+    const taxAmount = ((subTotal - discountAmount) * selectedProducts.tax) / 100;
+
+    const total = subTotal - discountAmount + taxAmount;
+    return Number(total.toFixed(2));
+  };
+
+
+  const handleEmitInvoice = () => {
+    const invoiceData = {
+      clientName: clientInfo.clientName,
+      products: selectedProducts.products.map((product) => ({
+        product_id: product.id,
+        quantity: product.quantity,
+        price: product.price,
+      })),
+      discount: selectedProducts.discount,
+      tax: selectedProducts.tax,
+      total: calculateTotal()
+    };
+
+    console.log({ invoiceData })
+  }
+
   useEffect(() => {
     getAllProducts()
       .then((response) => {
@@ -129,6 +159,14 @@ export default function NewInvoicePage() {
           client_name={clientInfo.clientName}
           selectedProducts={selectedProducts}
         />
+      </div>
+
+      <div className="p-4 rounded shadow bg-white flex gap-4 items-center">
+        <Button onClick={handleEmitInvoice} className="bg-indigo-500">
+          Realizar venta
+        </Button>
+
+        <small className="text-gray-400">Porfavor revisar bien la informacion antes de emitir la venta de los productos.</small>
       </div>
     </div>
   );
