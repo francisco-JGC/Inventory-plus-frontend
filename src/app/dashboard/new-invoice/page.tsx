@@ -7,6 +7,7 @@ import useForm from "@/hooks/useForm";
 import { InvoicePreview } from "./_components/invoicePreview";
 import { getAllProducts } from "@/services/product";
 import { Button } from "@/components/ui/button";
+import { createOrder } from "@/services/order";
 
 export interface IProductInvoice {
   id: number
@@ -110,8 +111,16 @@ export default function NewInvoicePage() {
     return Number(total.toFixed(2));
   };
 
+  const resetSelectedProducts = () => {
+    setSelectedProducts({
+      products: [],
+      discount: 0,
+      tax: 15
+    });
+  };
 
-  const handleEmitInvoice = () => {
+
+  const handleEmitInvoice = async () => {
     const invoiceData = {
       clientName: clientInfo.clientName,
       products: selectedProducts.products.map((product) => ({
@@ -124,7 +133,18 @@ export default function NewInvoicePage() {
       total: calculateTotal()
     };
 
-    console.log({ invoiceData })
+    const response = await createOrder(invoiceData)
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Se ha realizado la venta')
+      resetForm()
+      resetSelectedProducts()
+    } else {
+      toast.error('Error al realizar la venta', {
+        description: response.message
+      })
+    }
   }
 
   useEffect(() => {
