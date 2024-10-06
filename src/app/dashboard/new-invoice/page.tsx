@@ -1,10 +1,11 @@
 'use client'
 import { ReceiptText } from "lucide-react";
 import { InvoiceDetails } from "./_components/invoiceDetails";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import useForm from "@/hooks/useForm";
 import { InvoicePreview } from "./_components/invoicePreview";
+import { getAllProducts } from "@/services/product";
 
 export interface IProductInvoice {
   id: number
@@ -12,45 +13,6 @@ export interface IProductInvoice {
   price: number
   stock: number
 }
-
-const data: IProductInvoice[] = [
-  {
-    id: 1,
-    product_name: "Melon",
-    price: 18,
-    stock: 10
-  },
-  {
-    id: 2,
-    product_name: "Sandia",
-    price: 19.5,
-    stock: 25
-  },
-  {
-    id: 3,
-    product_name: "Pepino",
-    price: 22,
-    stock: 30
-  },
-  {
-    id: 4,
-    product_name: "Pera",
-    price: 10.99,
-    stock: 40
-  },
-  {
-    id: 5,
-    product_name: "Manzana",
-    price: 99.50,
-    stock: 50
-  },
-  {
-    id: 6,
-    product_name: "Kiwi",
-    price: 89,
-    stock: 60
-  },
-]
 
 export interface ISelectedProducts {
   products: ISelectedItem[]
@@ -71,7 +33,7 @@ export interface IClientInfo {
 }
 
 export default function NewInvoicePage() {
-  const [products, setProducts] = useState<IProductInvoice[]>(data)
+  const [products, setProducts] = useState<IProductInvoice[]>([])
   const { formValues: clientInfo, handleInputChange, resetForm } = useForm<IClientInfo>({
     clientName: ''
   })
@@ -134,6 +96,15 @@ export default function NewInvoicePage() {
 
 
   const isNotSelectedProduct = (id: number | string) => selectedProducts?.products.find((product) => product.id === id)
+
+  useEffect(() => {
+    getAllProducts()
+      .then((response) => {
+        if (response.success) {
+          setProducts(response.data as any)
+        }
+      })
+  }, [])
 
   return (
     <div className="flex flex-col gap-4 w-full">

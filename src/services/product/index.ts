@@ -16,3 +16,11 @@ export const createProduct = async (
     useToken: true,
   })
 }
+
+export const getAllProducts = async (): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: '/product',
+    method: 'GET',
+    useToken: true,
+  })
+}
