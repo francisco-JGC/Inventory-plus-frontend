@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -9,7 +8,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
@@ -18,8 +16,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { IProductInvoice, ISelectedItem, ISelectedProducts } from "../page"
+import { Input } from "@/components/ui/input"
+import useForm from "@/hooks/useForm"
 
 interface IProps {
   selectedProducts: ISelectedItem[]
@@ -29,6 +29,31 @@ interface IProps {
 
 export function InputSearchProduct({ selectedProducts, products, handleSelectedProduct }: IProps) {
   const [open, setOpen] = useState(false)
+  const [rendererProducts, setRendererProducts] = useState<IProductInvoice[]>([])
+  const { formValues, handleInputChange } = useForm({
+    search: ''
+  })
+
+  const handleFilterProduct = (name: string) => {
+    if (name) {
+      setRendererProducts(
+        products.filter((item) =>
+          item.product_name.toLowerCase().includes(name.toLowerCase())
+        )
+      );
+    } else {
+      setRendererProducts(products);
+    }
+  };
+
+  useEffect(() => {
+    handleFilterProduct(formValues.search)
+  }, [formValues.search])
+
+  useEffect(() => {
+    setRendererProducts(products)
+  }, [])
+
 
   return (
     <div className="w-full">
@@ -46,11 +71,13 @@ export function InputSearchProduct({ selectedProducts, products, handleSelectedP
         </PopoverTrigger>
         <PopoverContent className="w-full p-0">
           <Command>
-            <CommandInput placeholder="Buscar producto..." />
+            <div className="p-4">
+              <Input name="search" value={formValues.search} onChange={handleInputChange} placeholder="Buscar producto..." />
+            </div>
             <CommandList>
               <CommandEmpty>Sin resultados.</CommandEmpty>
               <CommandGroup>
-                {products.map((item) => (
+                {rendererProducts.map((item) => (
                   <CommandItem
                     key={item.id}
                     value={item.id.toString()}
