@@ -1,4 +1,4 @@
-import { fetchData, IHandleResponse } from '@/utils/fetch-data'
+import { fetchData, IHandleResponse, IPagination } from '@/utils/fetch-data'
 import { toast } from 'sonner'
 
 export interface ICreateOrder {
@@ -26,6 +26,18 @@ export const createOrder = async (
     url: '/order/create',
     data: order,
     method: 'POST',
+    useToken: true,
+  })
+}
+
+export const getPaginationOrder = async ({
+  filter,
+  page,
+  limit,
+}: IPagination): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: `/order/${page}/${limit}/${filter}`,
+    method: 'GET',
     useToken: true,
   })
 }
