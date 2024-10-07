@@ -39,9 +39,4 @@ export const MENU_ITEMS = [
     label: 'Usuarios',
     path: '/dashboard/users',
   },
-  {
-    icon: FileBadge,
-    label: 'Reportes',
-    path: '/dashboard/reports',
-  },
 ]
