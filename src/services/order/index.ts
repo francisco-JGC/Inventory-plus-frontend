@@ -41,3 +41,13 @@ export const getPaginationOrder = async ({
     useToken: true,
   })
 }
+
+export const changeOrderStatusSale = async (
+  id: number,
+): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: `/order/change-status/${id}`,
+    method: 'GET',
+    useToken: true,
+  })
+}

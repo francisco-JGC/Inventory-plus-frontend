@@ -10,9 +10,10 @@ import { PriceFormat } from "@/utils/price-format"
 
 type IColumns = {
   onDelete: (id: number) => void
+  changeOrderStatusSale: (id: number) => void
 }
 
-export const ColumnsListOrder = ({ onDelete }: IColumns): ColumnDef<IOrderList>[] => {
+export const ColumnsListOrder = ({ onDelete, changeOrderStatusSale }: IColumns): ColumnDef<IOrderList>[] => {
   const router = useRouter()
   return [
     {
@@ -84,7 +85,19 @@ export const ColumnsListOrder = ({ onDelete }: IColumns): ColumnDef<IOrderList>[
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Acciones</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Cancelar venta</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}
+              >
+                <AlertDialogModal
+                  title={billing.sale_status ? 'Cancelar venta' : 'Realizar venta'}
+                  description="Cambiar el estado de venta"
+                  onConfirm={async () => changeOrderStatusSale(billing.id)}
+                  nameButton={billing.sale_status ? 'Cancelar venta' : 'Realizar venta'}
+                />
+              </DropdownMenuItem>
               <DropdownMenuItem>Detalles de factura</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-red-400"

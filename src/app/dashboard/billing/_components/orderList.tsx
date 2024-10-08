@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { ISearch } from '../../_types/pagination'
 import { toast } from 'sonner'
 import { deleteUserById } from '@/services/user'
-import { getPaginationOrder } from '@/services/order'
+import { changeOrderStatusSale, getPaginationOrder } from '@/services/order'
 
 export type IOrderList = {
   id: number
@@ -23,7 +23,7 @@ export const OrderList = () => {
   const { formValues: search, handleInputChange } = useForm<ISearch>({
     search: ''
   })
-  const [orders, setUsers] = useState<IOrderList[]>([])
+  const [orders, setOrders] = useState<IOrderList[]>([])
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [loading, setLoading] = useState<boolean>(false)
   const [pagination, setPagination] = useState({
@@ -58,11 +58,27 @@ export const OrderList = () => {
 
     if (response.success) {
       toast.success('Usuario eliminado con exito!')
-      setUsers(prevUser => prevUser.filter((item) => item.id !== id))
+      setOrders(prevUser => prevUser.filter((item) => item.id !== id))
     } else {
       toast.error('Hubo un error al eliminar el usuario', {
         description: 'Vuelva a intenarlo'
       })
+    }
+  }
+
+  const handleChangeOrderStatusSale = async (id: number) => {
+    toast.loading('Cambiando estado de venta...')
+    const response = await changeOrderStatusSale(id)
+    toast.dismiss()
+
+    if (response.success) {
+      toast.success('Se ha cambiado el estado de la venta')
+      setOrders((prevOrder) => prevOrder.map((item) => item.id === id ? {
+        ...item,
+        sale_status: !item.sale_status
+      } : item))
+    } else {
+      toast.error('Hubo un error en la solicitud')
     }
   }
 
@@ -72,7 +88,7 @@ export const OrderList = () => {
       getPaginationOrder({ page: currentPage, filter: search.search, limit: 10 })
         .then((data: any) => {
           if (data.success) {
-            setUsers(data.data)
+            setOrders(data.data)
             setPagination({
               current_page: pagination.current_page,
               total_pages: pagination.total_pages,
@@ -97,7 +113,7 @@ export const OrderList = () => {
         {/*  */}
       </div>
       <DataTable<IOrderList>
-        columns={ColumnsListOrder({ onDelete: handleDeleteuser })}
+        columns={ColumnsListOrder({ onDelete: handleDeleteuser, changeOrderStatusSale: handleChangeOrderStatusSale })}
         data={orders}
         search_by='email'
         searchValue={search.search}
