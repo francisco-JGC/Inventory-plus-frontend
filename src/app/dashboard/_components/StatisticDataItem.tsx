@@ -2,7 +2,7 @@ import { ChevronUp } from 'lucide-react'
 
 interface IStatisticItemsProps {
   label: string
-  value: string
+  value: string | number
   increase: number
   titleStyles?: string
   valueStyles?: string

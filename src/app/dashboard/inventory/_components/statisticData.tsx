@@ -1,6 +1,7 @@
 import { SeparatorLine, StatisticDataItem } from "../../_components/StatisticDataItem"
+import { IDetailsInventory } from "../page"
 
-export const StatisticData = () => {
+export const StatisticData = ({ total_product, total_providers, productsWithLowStock }: IDetailsInventory) => {
   return (
     <div className="bg-white shadow-sm rounded-lg w-full p-4 ">
       <div className="flex justify-between gap-4">
@@ -10,19 +11,19 @@ export const StatisticData = () => {
       </div>
       <div className='flex justify-between relative'>
         <StatisticDataItem
-          value="4,790"
+          value={total_product.toString() || ''}
           label="Productos Totales"
           increase={0}
         />
         <SeparatorLine />
         <StatisticDataItem
-          value="180"
+          value={total_providers.toString() || ''}
           label="Total de Proveedores"
           increase={0}
         />
         <SeparatorLine />
         <StatisticDataItem
-          value="4"
+          value={productsWithLowStock.toString() || ''}
           label="Productos con stock bajo"
           increase={0}
         />
