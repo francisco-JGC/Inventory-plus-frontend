@@ -36,3 +36,50 @@ export const getPaginationProduct = async ({
     useToken: true,
   })
 }
+
+export const deleteProductById = async (
+  id: number,
+): Promise<IHandleResponse> => {
+  toast.loading('Eliminando producto...', {
+    description: 'Espere un momento...',
+  })
+
+  return await fetchData({
+    url: `/product/delete/${id}`,
+    method: 'GET',
+    useToken: true,
+  })
+}
+
+// Función para abastecer stock de un producto
+export const replenishStock = async (
+  id: number,
+  amount: number,
+): Promise<IHandleResponse> => {
+  toast.loading('Abasteciendo stock...', {
+    description: 'Espere un momento...',
+  })
+
+  return await fetchData({
+    url: `/product/replenish-stock/${id}`,
+    data: { amount },
+    method: 'POST',
+    useToken: true,
+  })
+}
+
+export const updateProductById = async (
+  id: number,
+  productData: ICreateProduct,
+): Promise<IHandleResponse> => {
+  toast.loading('Actualizando producto...', {
+    description: 'Espere un momento...',
+  })
+
+  return await fetchData({
+    url: `/product/update/${id}`,
+    data: productData,
+    method: 'POST',
+    useToken: true,
+  })
+}
