@@ -98,7 +98,6 @@ export const ColumnsListProduct = ({ onDelete }: IColumns): ColumnDef<IProduct>[
               <DropdownMenuLabel>Acciones</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Modificar Información</DropdownMenuItem>
-              <DropdownMenuItem>Ver detalles de producto</DropdownMenuItem>
               <DropdownMenuItem>Abastecer Stock</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-red-400"
