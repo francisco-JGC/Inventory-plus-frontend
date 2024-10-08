@@ -22,39 +22,6 @@ export type IProvider = {
   created_at?: Date | string
 }
 
-const data: IProvider[] = [
-  {
-    id: 1,
-    email: "ken99@yahoo.com",
-    name: 'username',
-    address: '',
-    phone: '',
-    created_at: Date(),
-  },
-  {
-    id: 2,
-    email: "ken99@yahoo.com",
-    name: 'username',
-    address: '',
-    phone: '',
-    created_at: Date(),
-  }, {
-    id: 3,
-    email: "ken99@yahoo.com",
-    name: 'username',
-    address: '',
-    phone: '',
-    created_at: Date(),
-  }, {
-    id: 4,
-    email: "ken99@yahoo.com",
-    name: 'username',
-    address: '',
-    phone: '',
-    created_at: Date(),
-  },
-]
-
 export const ProvidersList = () => {
   const { formValues: search, handleInputChange } = useForm<ISearch>({
     search: ''

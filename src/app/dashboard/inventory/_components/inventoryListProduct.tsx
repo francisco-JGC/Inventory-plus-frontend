@@ -2,130 +2,29 @@
 import { DataTable } from '@/components/dataTable'
 import { ColumnsListProduct } from './listProductColumns'
 import useForm from '@/hooks/useForm'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ISearch } from '../../_types/pagination'
+import { getPaginationProduct } from '@/services/product'
 
 export type IProduct = {
-  id: number | string
-  stock: number,
-  status: 'show' | 'hide',
-  product_name: string,
-  low_stock_limit: number,
-  price: number,
-  created_at: Date | string
-  updated_at: Date | string
+  id: number
+  product_name: string
+  stock: number
+  low_stock_limit: number
+  status: 'show' | 'hide'
+  created_at: string
+  provider_name: string
+  price: number
 }
-
-const data: IProduct[] = [
-  {
-    id: "m5gr84i9",
-    stock: 316,
-    status: "show",
-    product_name: "ken99@yahoo.com",
-    low_stock_limit: 10,
-    price: 250,
-    created_at: Date(),
-    updated_at: Date()
-  },
-  {
-    id: "3u1reuv4",
-    stock: 242,
-    status: "show",
-    product_name: "Abe45@gmail.com",
-    low_stock_limit: 10,
-    price: 250,
-    created_at: Date(),
-    updated_at: Date()
-  },
-  {
-    id: "derv1ws0",
-    stock: 837,
-    status: "hide",
-    product_name: "Monserrat44@gmail.com",
-    low_stock_limit: 10,
-    price: 250,
-    created_at: Date(),
-    updated_at: Date()
-  },
-  {
-    id: "5kma53ae",
-    stock: 874,
-    status: "show",
-    product_name: "Silas22@gmail.com",
-    low_stock_limit: 10,
-    price: 250,
-    created_at: Date(),
-    updated_at: Date()
-  },
-  {
-    id: "bhqecj4p",
-    stock: 721,
-    status: "hide",
-    product_name: "carmella@hotmail.com",
-    low_stock_limit: 10,
-    price: 250,
-    created_at: Date(),
-    updated_at: Date()
-  },
-  {
-    id: "m5gr84i9",
-    stock: 316,
-    status: "show",
-    product_name: "ken99@yahoo.com",
-    low_stock_limit: 10,
-    price: 250,
-    created_at: Date(),
-    updated_at: Date()
-  },
-  {
-    id: "3u1reuv4",
-    stock: 242,
-    status: "show",
-    product_name: "Abe45@gmail.com",
-    low_stock_limit: 10,
-    price: 250,
-    created_at: Date(),
-    updated_at: Date()
-  },
-  {
-    id: "derv1ws0",
-    stock: 837,
-    status: "hide",
-    product_name: "Monserrat44@gmail.com",
-    low_stock_limit: 10,
-    price: 250,
-    created_at: Date(),
-    updated_at: Date()
-  },
-  {
-    id: "5kma53ae",
-    stock: 874,
-    status: "show",
-    product_name: "Silas22@gmail.com",
-    low_stock_limit: 10,
-    price: 250,
-    created_at: Date(),
-    updated_at: Date()
-  },
-  {
-    id: "bhqecj4p",
-    stock: 721,
-    status: "hide",
-    product_name: "carmella@hotmail.com",
-    low_stock_limit: 10,
-    price: 250,
-    created_at: Date(),
-    updated_at: Date()
-  },
-]
 
 export const InventoryListProduct = () => {
   const { formValues: search, handleInputChange } = useForm<ISearch>({
     search: ''
   })
   const [currentPage, setCurrentPage] = useState<number>(1)
+  const [products, setProducts] = useState<IProduct[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [pagination, setPagination] = useState({
     current_page: 0,
@@ -151,6 +50,21 @@ export const InventoryListProduct = () => {
     }
   }
 
+  useEffect(() => {
+    getPaginationProduct({ page: currentPage, filter: search.search, limit: 10 })
+      .then((response) => {
+        if (response.success) {
+          setProducts(response.data as any)
+          setPagination({
+            current_page: pagination.current_page,
+            total_pages: pagination.total_pages,
+            total_data: pagination.total_data,
+          })
+        }
+      })
+
+  }, [])
+
   return (
     <div className='bg-white p-4 shadow rounded flex flex-col gap-4'>
       <div>
@@ -161,8 +75,8 @@ export const InventoryListProduct = () => {
         </Button>
       </div>
       <DataTable<IProduct>
-        columns={ColumnsListProduct}
-        data={data}
+        columns={ColumnsListProduct({ onDelete: () => { } })}
+        data={products}
         search_by='product_name'
         searchValue={search.search}
         handleSearch={handleInputChange}
@@ -177,7 +91,8 @@ export const InventoryListProduct = () => {
           stock: 'Stock',
           low_stock_limit: 'Limite de stock bajo',
           status: 'Estado',
-          updated_at: 'Ultima actualización',
+          created_at: 'Fecha de creación',
+          provider_name: 'Proveedores',
           price: 'Precio',
         }}
       />

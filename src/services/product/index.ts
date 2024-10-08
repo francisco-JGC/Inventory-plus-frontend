@@ -1,5 +1,5 @@
 import { ICreateProduct } from '@/app/dashboard/inventory/add-product/page'
-import { fetchData, IHandleResponse } from '@/utils/fetch-data'
+import { fetchData, IHandleResponse, IPagination } from '@/utils/fetch-data'
 import { toast } from 'sonner'
 
 export const createProduct = async (
@@ -20,6 +20,18 @@ export const createProduct = async (
 export const getAllProducts = async (): Promise<IHandleResponse> => {
   return await fetchData({
     url: '/product',
+    method: 'GET',
+    useToken: true,
+  })
+}
+
+export const getPaginationProduct = async ({
+  filter,
+  page,
+  limit,
+}: IPagination): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: `/product/${page}/${limit}/${filter}`,
     method: 'GET',
     useToken: true,
   })
