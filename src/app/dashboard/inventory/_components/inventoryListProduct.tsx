@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ISearch } from '../../_types/pagination'
-import { getPaginationProduct } from '@/services/product'
+import { deleteProductById, getPaginationProduct } from '@/services/product'
+import { toast } from 'sonner'
 
 export type IProduct = {
   id: number
@@ -50,20 +51,41 @@ export const InventoryListProduct = () => {
     }
   }
 
-  useEffect(() => {
-    getPaginationProduct({ page: currentPage, filter: search.search, limit: 10 })
-      .then((response) => {
-        if (response.success) {
-          setProducts(response.data as any)
-          setPagination({
-            current_page: pagination.current_page,
-            total_pages: pagination.total_pages,
-            total_data: pagination.total_data,
-          })
-        }
-      })
+  const handleDeleteProduct = async (id: number) => {
+    const response = await deleteProductById(id)
+    toast.dismiss()
 
-  }, [])
+    if (response.success) {
+      toast.success('Producto eliminado con exito!')
+      setProducts(prevProduct => prevProduct.filter((item) => item.id !== id))
+    } else {
+      toast.error('Hubo un error al eliminar el producto', {
+        description: 'Vuelva a intenarlo'
+      })
+    }
+  }
+
+  useEffect(() => {
+    setLoading(true)
+    const timeOut = setTimeout(() => {
+      getPaginationProduct({ page: currentPage, filter: search.search, limit: 10 })
+        .then((response) => {
+          if (response.success) {
+            setProducts(response.data as any)
+            setPagination({
+              current_page: pagination.current_page,
+              total_pages: pagination.total_pages,
+              total_data: pagination.total_data,
+            })
+          }
+        })
+        .finally(() => {
+          toast.dismiss()
+          setLoading(false)
+        })
+    }, 700)
+    return () => clearTimeout(timeOut)
+  }, [search.search, currentPage])
 
   return (
     <div className='bg-white p-4 shadow rounded flex flex-col gap-4'>
@@ -75,7 +97,7 @@ export const InventoryListProduct = () => {
         </Button>
       </div>
       <DataTable<IProduct>
-        columns={ColumnsListProduct({ onDelete: () => { } })}
+        columns={ColumnsListProduct({ onDelete: handleDeleteProduct })}
         data={products}
         search_by='product_name'
         searchValue={search.search}

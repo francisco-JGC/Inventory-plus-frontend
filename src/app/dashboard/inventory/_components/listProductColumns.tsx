@@ -4,6 +4,7 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { IProduct } from "./inventoryListProduct"
 import { DateFormat } from "@/utils/date-format"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { AlertDialogModal } from "@/components/alertDialogModal"
 
 
 type IColumns = {
@@ -100,7 +101,23 @@ export const ColumnsListProduct = ({ onDelete }: IColumns): ColumnDef<IProduct>[
               <DropdownMenuItem>Ver detalles de producto</DropdownMenuItem>
               <DropdownMenuItem>Abastecer Stock</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-400">Eliminar Producto</DropdownMenuItem>
+              <DropdownMenuItem className="text-red-400"
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}
+              >
+                <AlertDialogModal
+                  nameButton="Eliminar Producto"
+                  title="¿Estás seguro de eliminar este producto?"
+                  onConfirm={() => onDelete(product?.id || 0)}
+                  buttonStyle={{
+                    color: 'tomato',
+                    fontWeight: 'bold',
+                  }}
+                  useButton={false}
+                />
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )

@@ -45,7 +45,7 @@ export const deleteProductById = async (
   })
 
   return await fetchData({
-    url: `/product/delete/${id}`,
+    url: `/product/delete-product/${id}/`,
     method: 'GET',
     useToken: true,
   })
