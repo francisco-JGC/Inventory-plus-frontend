@@ -28,7 +28,7 @@ export const ColumnsListOrder = ({ onDelete }: IColumns): ColumnDef<IOrderList>[
           </Button>
         )
       },
-      cell: ({ row }) => <div className="lowercase">{row.getValue("code")}</div>,
+      cell: ({ row }) => <div>{row.getValue("code")}</div>,
     },
     {
       accessorKey: "client_name",
@@ -52,6 +52,15 @@ export const ColumnsListOrder = ({ onDelete }: IColumns): ColumnDef<IOrderList>[
       },
     },
     {
+      accessorKey: "sale_status",
+      header: () => <div className="">Estatus de venta</div>,
+      cell: ({ row }) => {
+        return <div className="font-medium">
+          {row.getValue("sale_status") ? <span className="bg-green-400 text-white rounded-2xl p-2">Venta</span> : <span className="bg-red-400 text-white rounded-2xl p-2">Cancelado</span>}
+        </div>
+      },
+    },
+    {
       accessorKey: "created_at",
       header: "Fecha de creación",
       cell: ({ row }) => {
@@ -62,7 +71,7 @@ export const ColumnsListOrder = ({ onDelete }: IColumns): ColumnDef<IOrderList>[
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const user = row.original
+        const billing = row.original
 
         return (
           <DropdownMenu>
@@ -75,10 +84,8 @@ export const ColumnsListOrder = ({ onDelete }: IColumns): ColumnDef<IOrderList>[
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Acciones</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => router.push(`/dashboard/users/update/${user.id}`)}
-              >Modificar Información</DropdownMenuItem>
-              <DropdownMenuItem>Cambiar Permisos</DropdownMenuItem>
+              <DropdownMenuItem>Cancelar venta</DropdownMenuItem>
+              <DropdownMenuItem>Detalles de factura</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-red-400"
                 onClick={(e) => {
@@ -87,9 +94,9 @@ export const ColumnsListOrder = ({ onDelete }: IColumns): ColumnDef<IOrderList>[
                 }}
               >
                 <AlertDialogModal
-                  nameButton="Eliminar usuario"
-                  title="¿Estás seguro de eliminar este usuario?"
-                  onConfirm={() => onDelete(user?.id || 0)}
+                  nameButton="Eliminar factura"
+                  title="¿Estás seguro de eliminar este factura?"
+                  onConfirm={() => onDelete(billing.id || 0)}
                   buttonStyle={{
                     color: 'tomato',
                     fontWeight: 'bold',
