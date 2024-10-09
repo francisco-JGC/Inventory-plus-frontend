@@ -8,3 +8,11 @@ export const getMonthlySalesInformation =
       useToken: true,
     })
   }
+
+export const getSalesLastSixMonths = async (): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: '/dashboard/sales-last-six-month',
+    method: 'GET',
+    useToken: true,
+  })
+}

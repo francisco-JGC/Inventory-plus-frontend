@@ -17,15 +17,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const chartData = [
-  { date: "2024-1", sales: 222, },
-  { date: "2024-2", sales: 97, },
-  { date: "2024-3", sales: 167, },
-  { date: "2024-4", sales: 242, },
-  { date: "2024-5", sales: 373, },
-  { date: "2024-6", sales: 301, },
-]
-
 const chartConfig = {
   views: {
     label: "Total",
@@ -36,7 +27,12 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function FluctuationChart() {
+export interface IChartData {
+  date: string,
+  sales: number
+}
+
+export function FluctuationChart({ chartData }: { chartData: IChartData[] }) {
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>("sales")
 
