@@ -5,9 +5,10 @@ import { useEffect, useState } from "react"
 interface IProps {
   client_name: string
   selectedProducts: ISelectedProducts
+  className?: string
 }
 
-export const InvoicePreview = ({ client_name, selectedProducts }: IProps) => {
+export const InvoicePreview = ({ client_name, selectedProducts, className }: IProps) => {
   const [subtotal, setSubtotal] = useState<number>(0)
   const [tax, setTaxt] = useState<number>(0)
 
@@ -20,7 +21,7 @@ export const InvoicePreview = ({ client_name, selectedProducts }: IProps) => {
   }, [subtotal, selectedProducts])
 
   return (
-    <div className="bg-gray-200 w-2/4 p-10 rounded-lg text-sm">
+    <div className={`bg-gray-200 w-2/4 p-10 rounded-lg text-sm ${className}`}>
       <div className="bg-white p-4 rounded-lg shadow-md flex flex-col gap-4">
         <header className="border-b-2 py-2">
           <h2 className="font-bold">INVXXXX-XX-XX</h2>

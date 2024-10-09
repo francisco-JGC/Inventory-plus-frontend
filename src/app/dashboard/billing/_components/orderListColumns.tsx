@@ -1,12 +1,18 @@
 import { Button } from "@/components/ui/button"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { IOrderList } from "./orderList"
 import { DateFormat } from "@/utils/date-format"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { AlertDialogModal } from "@/components/alertDialogModal"
 import { useRouter } from "next/navigation"
 import { PriceFormat } from "@/utils/price-format"
+import { LoadBillingPreview } from "./loadBillingPreview"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
 type IColumns = {
   onDelete: (id: number) => void
@@ -98,7 +104,19 @@ export const ColumnsListOrder = ({ onDelete, changeOrderStatusSale }: IColumns):
                   nameButton={billing.sale_status ? 'Cancelar venta' : 'Realizar venta'}
                 />
               </DropdownMenuItem>
-              <DropdownMenuItem>Detalles de factura</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.preventDefault()
+                }}>
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <span>Detalles de venta</span>
+                  </SheetTrigger>
+                  <SheetContent>
+                    <LoadBillingPreview id={billing.id} />
+                  </SheetContent>
+                </Sheet>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-red-400"
                 onClick={(e) => {

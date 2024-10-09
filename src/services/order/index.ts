@@ -51,3 +51,13 @@ export const changeOrderStatusSale = async (
     useToken: true,
   })
 }
+
+export const getInvoiceDetails = async (
+  id: number,
+): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: `/order/invoice-details/${id}`,
+    method: 'GET',
+    useToken: true,
+  })
+}
