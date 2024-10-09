@@ -10,28 +10,28 @@ export const ActionsLinks = () => {
       </div>
       <div className="flex gap-4 justify-between p-4">
         <Button variant={"secondary"}>
-          <Link href={""} className="flex gap-2 items-center">
+          <Link href={"/dashboard/inventory/add-product"} className="flex gap-2 items-center">
             <Plus width={17} />
             Crear Producto
           </Link>
         </Button>
 
         <Button variant={"secondary"}>
-          <Link href={""} className="flex gap-2 items-center">
+          <Link href={"/dashboard/users"} className="flex gap-2 items-center">
             <Users width={17} />
             Administrar Usuarios
           </Link>
         </Button>
 
         <Button variant={"secondary"}>
-          <Link href={""} className="flex gap-2 items-center">
+          <Link href={"/dashboard/new-invoice"} className="flex gap-2 items-center">
             <Box width={17} />
             Registrar Nueva Venta
           </Link>
         </Button>
 
         <Button variant={"secondary"}>
-          <Link href={""} className="flex gap-2 items-center">
+          <Link href={"/dashboard/inventory"} className="flex gap-2 items-center">
             <Boxes width={17} />
             Ver Inventario
           </Link>
