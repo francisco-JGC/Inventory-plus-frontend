@@ -61,3 +61,14 @@ export const getInvoiceDetails = async (
     useToken: true,
   })
 }
+
+export const deleteOrderById = async (id: number) => {
+  return await fetchData({
+    url: '/order/delete',
+    method: 'POST',
+    data: {
+      id,
+    },
+    useToken: true,
+  })
+}

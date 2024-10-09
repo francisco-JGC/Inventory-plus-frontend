@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { ISearch } from '../../_types/pagination'
 import { toast } from 'sonner'
 import { deleteUserById } from '@/services/user'
-import { changeOrderStatusSale, getPaginationOrder } from '@/services/order'
+import { changeOrderStatusSale, deleteOrderById, getPaginationOrder } from '@/services/order'
 
 export type IOrderList = {
   id: number
@@ -50,17 +50,17 @@ export const OrderList = () => {
     }
   }
 
-  const handleDeleteuser = async (id: number) => {
-    toast.loading('Eliminando usuario...')
+  const handleDeleteOrder = async (id: number) => {
+    toast.loading('Eliminando factura...')
 
-    const response = await deleteUserById(id)
+    const response = await deleteOrderById(id)
     toast.dismiss()
 
     if (response.success) {
-      toast.success('Usuario eliminado con exito!')
-      setOrders(prevUser => prevUser.filter((item) => item.id !== id))
+      toast.success('Factura eliminada con exito!')
+      setOrders(prevOrder => prevOrder.filter((item) => item.id !== id))
     } else {
-      toast.error('Hubo un error al eliminar el usuario', {
+      toast.error('Hubo un error al eliminar la factura', {
         description: 'Vuelva a intenarlo'
       })
     }
@@ -113,7 +113,7 @@ export const OrderList = () => {
         {/*  */}
       </div>
       <DataTable<IOrderList>
-        columns={ColumnsListOrder({ onDelete: handleDeleteuser, changeOrderStatusSale: handleChangeOrderStatusSale })}
+        columns={ColumnsListOrder({ onDelete: handleDeleteOrder, changeOrderStatusSale: handleChangeOrderStatusSale })}
         data={orders}
         search_by='email'
         searchValue={search.search}
