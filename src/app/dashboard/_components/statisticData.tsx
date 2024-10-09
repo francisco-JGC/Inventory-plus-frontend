@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { SeparatorLine, StatisticDataItem } from "./StatisticDataItem"
 import { Download, FileArchiveIcon, FileBadge } from "lucide-react"
+import { IGetMonthlySalesInformation } from "../page"
+import { PriceFormat } from "@/utils/price-format"
 
-export const StatisticData = () => {
+export const StatisticData = ({ total_cash, cash_percentage, total_inventory_value, total_product, total_sales, sales_percentage }: IGetMonthlySalesInformation) => {
   return (
     <div className="bg-white shadow-sm rounded-lg w-full p-4 ">
       <div className="flex justify-between gap-4">
@@ -19,25 +21,25 @@ export const StatisticData = () => {
       </div>
       <div className='flex justify-between relative'>
         <StatisticDataItem
-          value="$14,390.13"
+          value={PriceFormat(total_cash)}
           label="Total Efectivo"
-          increase={31.5}
+          increase={cash_percentage}
         />
         <SeparatorLine />
         <StatisticDataItem
-          value="891"
+          value={total_product}
           label="Total Productos en Inventario"
           increase={0}
         />
         <SeparatorLine />
         <StatisticDataItem
-          value="457"
+          value={total_sales}
           label="Ventas Realizadas"
-          increase={-6.78}
+          increase={sales_percentage}
         />
         <SeparatorLine />
         <StatisticDataItem
-          value="$389,245.90"
+          value={PriceFormat(total_inventory_value)}
           label="Valor Total de Inventario"
           increase={0}
         />
