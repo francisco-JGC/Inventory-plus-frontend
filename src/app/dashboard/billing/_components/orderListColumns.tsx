@@ -9,7 +9,6 @@ import { IOrderList } from "./orderList"
 import { DateFormat } from "@/utils/date-format"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { AlertDialogModal } from "@/components/alertDialogModal"
-import { useRouter } from "next/navigation"
 import { PriceFormat } from "@/utils/price-format"
 import { LoadBillingPreview } from "./loadBillingPreview"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
@@ -20,7 +19,6 @@ type IColumns = {
 }
 
 export const ColumnsListOrder = ({ onDelete, changeOrderStatusSale }: IColumns): ColumnDef<IOrderList>[] => {
-  const router = useRouter()
   return [
     {
       accessorKey: "code",
@@ -117,7 +115,7 @@ export const ColumnsListOrder = ({ onDelete, changeOrderStatusSale }: IColumns):
                   </SheetContent>
                 </Sheet>
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
+              {/* <DropdownMenuSeparator />
               <DropdownMenuItem className="text-red-400"
                 onClick={(e) => {
                   e.preventDefault()
@@ -134,7 +132,7 @@ export const ColumnsListOrder = ({ onDelete, changeOrderStatusSale }: IColumns):
                   }}
                   useButton={false}
                 />
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
             </DropdownMenuContent>
           </DropdownMenu>
         )
