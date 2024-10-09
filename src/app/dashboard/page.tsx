@@ -31,12 +31,17 @@ export interface ITopProducts {
   total_sold: number
 }
 
+export interface IChartTopProducts {
+  product_name: string
+  sales: number
+}
+
 
 export default function Home() {
   const [statisticData, setStatisticData] = useState<IGetMonthlySalesInformation>({} as any)
   const [fluctuation, setFluctiation] = useState<IChartData[]>([])
   const [topProducts, setTopProducts] = useState<ITopProducts[]>([])
-
+  const [chartTopProducts, setChartTopProducts] = useState<IChartTopProducts[]>([])
   useEffect(() => {
     getMonthlySalesInformation()
       .then((response) => {
@@ -59,7 +64,14 @@ export default function Home() {
     getTop7Products()
       .then((response) => {
         if (response.success) {
-          setTopProducts(response.data as any)
+          const { data } = response as { data: ITopProducts[] }
+          setTopProducts(data)
+          setChartTopProducts(data.map(item => {
+            return {
+              product_name: item.product_name,
+              sales: item.total_sold
+            }
+          }))
         }
       })
 
@@ -70,7 +82,7 @@ export default function Home() {
       <ActionsLinks />
       <FluctuationChart chartData={fluctuation} />
       <TopProducts data={topProducts} />
-      <TopProductsChart />
+      <TopProductsChart chartData={chartTopProducts} />
     </div>
   );
 }

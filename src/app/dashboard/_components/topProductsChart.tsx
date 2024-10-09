@@ -9,14 +9,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { IChartTopProducts } from "../page"
 
-const chartData = [
-  { product_name: "Nombre de producto 1", sales: 186, },
-  { product_name: "Nombre de producto 2", sales: 305, },
-  { product_name: "Nombre de producto 3", sales: 237, },
-  { product_name: "Nombre de producto 4", sales: 73, },
-  { product_name: "Nombre de producto 5", sales: 209, },
-]
 
 const chartConfig: ChartConfig = {
   sales: {
@@ -25,7 +19,7 @@ const chartConfig: ChartConfig = {
   },
 }
 
-export function TopProductsChart() {
+export function TopProductsChart({ chartData }: { chartData: IChartTopProducts[] }) {
   return (
     <Card>
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
