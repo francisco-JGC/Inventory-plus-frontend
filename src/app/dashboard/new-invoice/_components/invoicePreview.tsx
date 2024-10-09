@@ -74,7 +74,7 @@ export const InvoicePreview = ({ client_name, selectedProducts, className, code 
             <span></span>
             <span></span>
             <span></span>
-            <span>Subtotal</span>
+            <span>Subtotal:</span>
             <span>{PriceFormat(
               subtotal
             )}</span>
@@ -84,7 +84,7 @@ export const InvoicePreview = ({ client_name, selectedProducts, className, code 
             <span></span>
             <span></span>
             <span></span>
-            <span>Descuento</span>
+            <span>Descuento:</span>
             <span>{selectedProducts.discount > 0 ? `${PriceFormat(subtotal * (selectedProducts.discount / 100))}` : 'N/A'}</span>
           </div>
 
@@ -92,7 +92,7 @@ export const InvoicePreview = ({ client_name, selectedProducts, className, code 
             <span></span>
             <span></span>
             <span></span>
-            <span>Impuesto</span>
+            <span>Impuesto:</span>
             <span>{PriceFormat(tax)}</span>
           </div>
 
@@ -100,7 +100,7 @@ export const InvoicePreview = ({ client_name, selectedProducts, className, code 
             <span></span>
             <span></span>
             <span></span>
-            <span>TOTAL</span>
+            <span>TOTAL:</span>
             <span>{
               PriceFormat(
                 (subtotal - (subtotal * (selectedProducts.discount / 100))) + tax

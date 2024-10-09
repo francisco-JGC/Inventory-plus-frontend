@@ -92,13 +92,12 @@ export const ColumnsListOrder = ({ onDelete, changeOrderStatusSale }: IColumns):
               <DropdownMenuItem
                 onClick={(e) => {
                   e.preventDefault()
-                  e.stopPropagation()
                 }}
               >
                 <AlertDialogModal
                   title={billing.sale_status ? 'Cancelar venta' : 'Realizar venta'}
                   description="Cambiar el estado de venta"
-                  onConfirm={async () => changeOrderStatusSale(billing.id)}
+                  onConfirm={() => changeOrderStatusSale(billing.id)}
                   nameButton={billing.sale_status ? 'Cancelar venta' : 'Realizar venta'}
                 />
               </DropdownMenuItem>

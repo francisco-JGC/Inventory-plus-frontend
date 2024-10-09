@@ -84,7 +84,7 @@ export const LoadBillingPreview = ({ id }: IProps) => {
                 })
               }}
               code={billing.code}
-              className="w-[105%] !p-1 text-[11px]"
+              className="w-[105%] !p-1 !text-[11px]"
             />
           )
       }
