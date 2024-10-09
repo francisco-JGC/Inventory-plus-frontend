@@ -6,11 +6,13 @@ interface IProps {
   client_name: string
   selectedProducts: ISelectedProducts
   className?: string
+  code?: string
 }
 
-export const InvoicePreview = ({ client_name, selectedProducts, className }: IProps) => {
+export const InvoicePreview = ({ client_name, selectedProducts, className, code }: IProps) => {
   const [subtotal, setSubtotal] = useState<number>(0)
   const [tax, setTaxt] = useState<number>(0)
+  const [codeInvoice, setCodeInvoice] = useState<string>(code ? code : 'INVXX-XX-XX-XX')
 
   useEffect(() => {
     setSubtotal(selectedProducts.products.reduce((acc, cur) => acc + (cur.price * cur.quantity), 0))
@@ -24,7 +26,7 @@ export const InvoicePreview = ({ client_name, selectedProducts, className }: IPr
     <div className={`bg-gray-200 w-2/4 p-10 rounded-lg text-sm ${className}`}>
       <div className="bg-white p-4 rounded-lg shadow-md flex flex-col gap-4">
         <header className="border-b-2 py-2">
-          <h2 className="font-bold">INVXXXX-XX-XX</h2>
+          <h2 className="font-bold">{codeInvoice}</h2>
         </header>
 
         <div className="grid grid-cols-2">

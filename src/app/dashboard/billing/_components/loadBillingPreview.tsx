@@ -47,7 +47,6 @@ export const LoadBillingPreview = ({ id }: IProps) => {
 
 
   useEffect(() => {
-    toast.loading('Cargando detalles...')
     getInvoiceDetails(id)
       .then((response) => {
         if (response.success) {
@@ -55,7 +54,6 @@ export const LoadBillingPreview = ({ id }: IProps) => {
         }
       })
       .finally(() => {
-        toast.dismiss()
         setLoading(false)
       })
 
@@ -85,6 +83,7 @@ export const LoadBillingPreview = ({ id }: IProps) => {
                   }
                 })
               }}
+              code={billing.code}
               className="w-[105%] !p-1 text-[11px]"
             />
           )
