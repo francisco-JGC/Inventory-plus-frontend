@@ -8,41 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { ITopProducts } from "../page"
 
-const invoices = [
-  {
-    product_name: "Nombre del product 1",
-    provider: "Paid",
-    sales: "710",
-    stock: "Credit Card",
-  },
-  {
-    product_name: "Nombre del product 2",
-    provider: "Pending",
-    sales: "490",
-    stock: "PayPal",
-  },
-  {
-    product_name: "Nombre del product 3",
-    provider: "Unpaid",
-    sales: "902",
-    stock: "Bank Transfer",
-  },
-  {
-    product_name: "Nombre del product 4",
-    provider: "Paid",
-    sales: "1002",
-    stock: "Credit Card",
-  },
-  {
-    product_name: "Nombre del product 5",
-    provider: "Paid",
-    sales: "687",
-    stock: "PayPal",
-  }
-]
-
-export const TopProducts = () => {
+export const TopProducts = ({ data }: { data: ITopProducts[] }) => {
   return (
     <div className="bg-white p-4">
       <div className="px-2">
@@ -61,12 +29,12 @@ export const TopProducts = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoices) => (
-            <TableRow key={invoices.product_name}>
+          {data.map((invoices) => (
+            <TableRow key={invoices.id}>
               <TableCell className="font-medium">{invoices.product_name}</TableCell>
-              <TableCell>{invoices.provider}</TableCell>
+              <TableCell>{invoices.provider_name}</TableCell>
               <TableCell>{invoices.stock}</TableCell>
-              <TableCell>{invoices.sales}</TableCell>
+              <TableCell>{invoices.total_sold}</TableCell>
             </TableRow>
           ))}
         </TableBody>

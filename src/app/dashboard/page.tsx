@@ -5,7 +5,7 @@ import { ActionsLinks } from "./_components/actionsLinks";
 import { TopProducts } from "./_components/topProducts";
 import { TopProductsChart } from "./_components/topProductsChart";
 import { useEffect, useState } from "react";
-import { getMonthlySalesInformation, getSalesLastSixMonths } from "@/services/dashboard";
+import { getMonthlySalesInformation, getSalesLastSixMonths, getTop7Products } from "@/services/dashboard";
 
 export interface IGetMonthlySalesInformation {
   total_cash: number
@@ -23,11 +23,19 @@ export interface IGetSalesLastSixMonths {
   startDate: string
   endDate: string
 }
+export interface ITopProducts {
+  id: number
+  product_name: string
+  provider_name: string
+  stock: number
+  total_sold: number
+}
 
 
 export default function Home() {
   const [statisticData, setStatisticData] = useState<IGetMonthlySalesInformation>({} as any)
-  const [fluctuation, setFluctiation] = useState<IChartData[]>([] as any)
+  const [fluctuation, setFluctiation] = useState<IChartData[]>([])
+  const [topProducts, setTopProducts] = useState<ITopProducts[]>([])
 
   useEffect(() => {
     getMonthlySalesInformation()
@@ -48,13 +56,20 @@ export default function Home() {
           }))
         }
       })
+    getTop7Products()
+      .then((response) => {
+        if (response.success) {
+          setTopProducts(response.data as any)
+        }
+      })
+
   }, [])
   return (
     <div className="flex flex-col gap-4">
       <StatisticData {...statisticData} />
       <ActionsLinks />
       <FluctuationChart chartData={fluctuation} />
-      <TopProducts />
+      <TopProducts data={topProducts} />
       <TopProductsChart />
     </div>
   );

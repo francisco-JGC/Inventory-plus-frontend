@@ -16,3 +16,11 @@ export const getSalesLastSixMonths = async (): Promise<IHandleResponse> => {
     useToken: true,
   })
 }
+
+export const getTop7Products = async (): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: '/dashboard/top-products',
+    method: 'GET',
+    useToken: true,
+  })
+}
