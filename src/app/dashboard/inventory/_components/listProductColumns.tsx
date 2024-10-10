@@ -5,6 +5,8 @@ import { IProduct } from "./inventoryListProduct"
 import { DateFormat } from "@/utils/date-format"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { AlertDialogModal } from "@/components/alertDialogModal"
+import Link from "next/link"
+
 
 
 type IColumns = {
@@ -97,8 +99,10 @@ export const ColumnsListProduct = ({ onDelete }: IColumns): ColumnDef<IProduct>[
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Acciones</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Modificar Información</DropdownMenuItem>
-              <DropdownMenuItem>Abastecer Stock</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href={`/dashboard/inventory/update-product/${product.id}`}>Modificar Información</Link>
+              </DropdownMenuItem>
+              {/* <DropdownMenuItem>Abastecer Stock</DropdownMenuItem> */}
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-red-400"
                 onClick={(e) => {

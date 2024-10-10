@@ -26,7 +26,7 @@ export default function RootLayout({
     ROLE_PERMISSIONS[role || 'admin']?.includes(item.label)
   );
 
-  router.push(filteredMenuItems[0].path)
+  // router.push(filteredMenuItems[0].path)
 
   return (
     <html lang="en">

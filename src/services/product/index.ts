@@ -50,6 +50,13 @@ export const deleteProductById = async (
     useToken: true,
   })
 }
+export const getProductById = async (id: number): Promise<IHandleResponse> => {
+  return await fetchData({
+    url: `/product/${id}`,
+    method: 'GET',
+    useToken: true,
+  })
+}
 
 // Función para abastecer stock de un producto
 export const replenishStock = async (
