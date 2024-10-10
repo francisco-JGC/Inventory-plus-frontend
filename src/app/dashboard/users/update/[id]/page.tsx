@@ -2,11 +2,11 @@
 import useForm from "@/hooks/useForm"
 import { UserType } from "../../_components/addUser"
 import { useEffect, useState } from "react"
-import { getProviderById, updateProviderById } from "@/services/provider"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { getUserById, updateUserById } from "@/services/user"
+import { getAllRoles } from "@/services/role"
 
 export interface IRoot {
   params: {
@@ -14,9 +14,18 @@ export interface IRoot {
   }
 }
 
+interface IRoles {
+  id: number
+  name: string
+  label: string
+  description: string
+  created_at: Date
+}
+
 export default function Page({ params }: IRoot) {
   const { id } = params
   const { formValues, handleInputChange, setValues } = useForm<UserType>({} as any)
+  const [roles, setRoles] = useState<IRoles[]>([])
 
   const handleSubmitUpdate = async () => {
     toast.loading('Actualizando información...')
@@ -36,7 +45,22 @@ export default function Page({ params }: IRoot) {
     getUserById(Number(id))
       .then((response) => {
         if (response.success) {
-          setValues(response.data as any)
+
+          const { data } = response as { data: any }
+
+          setValues({
+            username: data?.username || '',
+            email: data.email,
+            password: '',
+            role_name: data.roles[0]?.name || ''
+          })
+        }
+      })
+
+    getAllRoles()
+      .then((response) => {
+        if (response.success) {
+          setRoles(response.data as any)
         }
       })
   }, [])
@@ -60,6 +84,26 @@ export default function Page({ params }: IRoot) {
         <div className="flex flex-col gap-3">
           <label htmlFor="">Contraseña</label>
           <Input name="password" value={formValues.password} onChange={handleInputChange} required />
+        </div>
+
+        <div className="flex flex-col gap-3">
+          <label htmlFor="">Rol del usuario</label>
+          <select onChange={(e) => {
+            handleInputChange({ target: { name: e.currentTarget.name, value: e.currentTarget.value } } as any)
+          }}
+            name="role_name"
+            value={formValues.role_name}
+            defaultValue={formValues.role_name}
+          >
+            <option value="" disabled>Seleccione un rol</option>
+            {
+              roles.length > 0 && roles.map(item => {
+                return (
+                  <option value={item.name} key={item.id}>{item.label}</option>
+                )
+              })
+            }
+          </select>
         </div>
       </div>
 

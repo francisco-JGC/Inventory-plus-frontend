@@ -11,6 +11,7 @@ export interface UserType {
   username: string,
   email: string
   password: string
+  role_name?: string
 }
 
 interface IProps {
