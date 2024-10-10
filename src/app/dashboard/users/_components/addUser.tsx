@@ -34,7 +34,9 @@ export const AddUser = ({ handleAddUser }: IProps) => {
     toast.dismiss()
 
     if (!response.success) {
-      return toast.error('Hubo un error al crear el Usuario')
+      return toast.error('Hubo un error al crear el Usuario', {
+        description: response.message,
+      })
     }
     toast.success('Usuario creado')
     handleAddUser(response.data as any)

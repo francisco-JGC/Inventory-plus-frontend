@@ -36,7 +36,9 @@ export const AddProvider = ({ handleAddProvider }: IProps) => {
     toast.dismiss()
 
     if (!response.success) {
-      return toast.error('Hubo un error al crear el Proveedor')
+      return toast.error('Hubo un error al crear el Proveedor', {
+        description: response.message,
+      })
     }
     toast.success('Proveedor creado')
     handleAddProvider(response.data as any)

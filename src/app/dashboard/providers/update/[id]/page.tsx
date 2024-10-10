@@ -27,7 +27,9 @@ export default function Page({ params }: IRoot) {
     if (response.success) {
       toast.success('Informacion actualizada')
     } else {
-      toast.error('Hubo un error en la solicitud')
+      toast.error('Hubo un error en la solicitud', {
+        description: response.message,
+      })
     }
   }
 

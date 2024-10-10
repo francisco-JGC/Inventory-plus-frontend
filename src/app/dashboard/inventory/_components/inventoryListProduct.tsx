@@ -60,7 +60,7 @@ export const InventoryListProduct = () => {
       setProducts(prevProduct => prevProduct.filter((item) => item.id !== id))
     } else {
       toast.error('Hubo un error al eliminar el producto', {
-        description: 'Vuelva a intenarlo'
+        description: response.message,
       })
     }
   }

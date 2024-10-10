@@ -66,7 +66,7 @@ export const UsersList = () => {
       setUsers(prevUser => prevUser.filter((item) => item.id !== id))
     } else {
       toast.error('Hubo un error al eliminar el usuario', {
-        description: 'Vuelva a intenarlo'
+        description: response.message,
       })
     }
   }
@@ -84,7 +84,9 @@ export const UsersList = () => {
               total_data: pagination.total_data,
             })
           } else {
-            toast.error('No se pudieron cargar los registros')
+            toast.error('No se pudieron cargar los registros', {
+              description: data.message,
+            })
           }
         })
         .finally(() => {

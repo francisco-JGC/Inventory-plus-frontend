@@ -60,7 +60,7 @@ export const OrderList = () => {
       setOrders(prevOrder => prevOrder.filter((item) => item.id !== id))
     } else {
       toast.error('Hubo un error al eliminar la factura', {
-        description: 'Vuelva a intenarlo'
+        description: response.message,
       })
     }
   }
@@ -77,7 +77,9 @@ export const OrderList = () => {
         sale_status: !item.sale_status
       } : item)))
     } else {
-      toast.error('Hubo un error en la solicitud')
+      toast.error('Hubo un error en la solicitud', {
+        description: response.message,
+      })
     }
   }
 
@@ -94,7 +96,9 @@ export const OrderList = () => {
               total_data: pagination.total_data,
             })
           } else {
-            toast.error('No se pudieron cargar los registros')
+            toast.error('No se pudieron cargar los registros', {
+              description: data.message,
+            })
           }
         })
         .finally(() => {

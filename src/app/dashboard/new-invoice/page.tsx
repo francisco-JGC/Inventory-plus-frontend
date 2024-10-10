@@ -142,7 +142,7 @@ export default function NewInvoicePage() {
       resetSelectedProducts()
     } else {
       toast.error('Error al realizar la venta', {
-        description: response.message
+        description: response.message,
       })
     }
   }

@@ -39,7 +39,9 @@ export default function AddProductPage() {
     toast.dismiss()
 
     if (!response.success) {
-      return toast.error('Hubo un error al crear el producto')
+      return toast.error('Hubo un error al crear el producto', {
+        description: response.message,
+      })
     }
 
     toast.success('Se ha creado el producto')
