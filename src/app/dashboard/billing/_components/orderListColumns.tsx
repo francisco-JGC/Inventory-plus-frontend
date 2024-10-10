@@ -89,7 +89,7 @@ export const ColumnsListOrder = ({ onDelete, changeOrderStatusSale }: IColumns):
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Acciones</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
+              {/* <DropdownMenuItem
                 onClick={(e) => {
                   e.preventDefault()
                 }}
@@ -100,7 +100,7 @@ export const ColumnsListOrder = ({ onDelete, changeOrderStatusSale }: IColumns):
                   onConfirm={() => changeOrderStatusSale(billing.id)}
                   nameButton={billing.sale_status ? 'Cancelar venta' : 'Realizar venta'}
                 />
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuItem
                 onClick={(e) => {
                   e.preventDefault()

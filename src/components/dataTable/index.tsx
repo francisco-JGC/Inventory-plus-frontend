@@ -135,7 +135,7 @@ export function DataTable<T>({
             </DropdownMenu>
           )}
           {/*  */}
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
                 Mostrar columnas <ChevronDown className="ml-2 h-4 w-4" />
@@ -165,7 +165,7 @@ export function DataTable<T>({
                   )
                 })}
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
         </div>
       </div>
       <div className="rounded-md border">

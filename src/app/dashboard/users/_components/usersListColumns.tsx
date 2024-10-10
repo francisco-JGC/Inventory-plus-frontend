@@ -70,7 +70,7 @@ export const ColumnsListUsers = ({ onDelete }: IColumns): ColumnDef<IUser>[] => 
               <DropdownMenuItem
                 onClick={() => router.push(`/dashboard/users/update/${user.id}`)}
               >Modificar Información</DropdownMenuItem>
-              <DropdownMenuItem>Cambiar Permisos</DropdownMenuItem>
+              {/* <DropdownMenuItem>Cambiar Permisos</DropdownMenuItem> */}
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-red-400"
                 onClick={(e) => {

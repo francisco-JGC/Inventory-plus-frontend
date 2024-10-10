@@ -72,10 +72,10 @@ export const OrderList = () => {
 
     if (response.success) {
       toast.success('Se ha cambiado el estado de la venta')
-      setOrders((prevOrder) => prevOrder.map((item) => item.id === id ? {
+      setOrders((prevOrder) => prevOrder.map((item) => (item.id === id ? {
         ...item,
         sale_status: !item.sale_status
-      } : item))
+      } : item)))
     } else {
       toast.error('Hubo un error en la solicitud')
     }
@@ -114,7 +114,7 @@ export const OrderList = () => {
       <DataTable<IOrderList>
         columns={ColumnsListOrder({ onDelete: handleDeleteOrder, changeOrderStatusSale: handleChangeOrderStatusSale })}
         data={orders}
-        search_by='email'
+        search_by='code'
         searchValue={search.search}
         handleSearch={handleInputChange}
         handleNextPage={handleNextPage}
@@ -122,14 +122,7 @@ export const OrderList = () => {
         currentPage={currentPage}
         totalPages={pagination.total_pages}
         isLoading={loading}
-        search_placeholder="Buscar nombre del producto"
-        filter_columns={{
-          email: 'Correo Electronico',
-          username: 'Nombre de usuario',
-          role: 'Rol',
-          status: 'Estado',
-          created_at: 'Fecha de creación',
-        }}
+        search_placeholder="Buscar codigo de venta"
       />
     </div>
   )
