@@ -15,3 +15,11 @@ export const downloadProvidersReport = async () => {
     useToken: true,
   })
 }
+
+export const downloadInventoryReport = async () => {
+  return await fetchFile({
+    url: '/xlsx-report/inventory-report',
+    fileName: 'Reporte de ventas.xlsx',
+    useToken: true,
+  })
+}

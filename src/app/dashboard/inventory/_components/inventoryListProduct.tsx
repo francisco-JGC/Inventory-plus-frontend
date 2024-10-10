@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button'
 import { ISearch } from '../../_types/pagination'
 import { deleteProductById, getPaginationProduct } from '@/services/product'
 import { toast } from 'sonner'
+import { downloadInventoryReport } from '@/services/xlsx-report'
+import { Download } from 'lucide-react'
 
 export type IProduct = {
   id: number
@@ -65,6 +67,15 @@ export const InventoryListProduct = () => {
     }
   }
 
+  const handleGenerateInventory = async () => {
+    toast.loading('Generando reporte de Inventario...', {
+      description: 'Porfavor espere un momento'
+    })
+
+    await downloadInventoryReport()
+    toast.dismiss()
+  }
+
   useEffect(() => {
     setLoading(true)
     const timeOut = setTimeout(() => {
@@ -89,11 +100,18 @@ export const InventoryListProduct = () => {
 
   return (
     <div className='bg-white p-4 shadow rounded flex flex-col gap-4'>
-      <div>
+      <div className='flex justify-between items-center'>
         <Button className='bg-indigo-500'>
           <Link href={'/dashboard/inventory/add-product'}>
             Agregar Nuevo Producto
           </Link>
+        </Button>
+
+        <Button className="flex gap-2 items-center bg-indigo-500 hover:bg-indigo-600/90" title="Exportar Registro de venta del Mes"
+          onClick={handleGenerateInventory}
+        >
+          <Download width={17} />
+          Exportar
         </Button>
       </div>
       <DataTable<IProduct>
