@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react'
 import { ISearch } from '../../_types/pagination'
 import { toast } from 'sonner'
 import { changeOrderStatusSale, deleteOrderById, getPaginationOrder } from '@/services/order'
+import { Button } from '@/components/ui/button'
+import { Download } from 'lucide-react'
+import { downloadSalesReport } from '@/services/xlsx-report'
 
 export type IOrderList = {
   id: number
@@ -83,6 +86,15 @@ export const OrderList = () => {
     }
   }
 
+  const handleGenerateReportSales = async () => {
+    toast.loading('Generando reporte de ventas...', {
+      description: 'Porfavor espere un momento'
+    })
+
+    await downloadSalesReport()
+    toast.dismiss()
+  }
+
   useEffect(() => {
     setLoading(true)
     const timeOut = setTimeout(() => {
@@ -112,8 +124,13 @@ export const OrderList = () => {
 
   return (
     <div className='bg-white p-4 shadow rounded flex flex-col gap-4'>
-      <div>
-        {/*  */}
+      <div className='flex justify-end'>
+        <Button className="flex gap-2 items-center bg-indigo-500 hover:bg-indigo-600/90" title="Exportar Registro de venta del Mes"
+          onClick={handleGenerateReportSales}
+        >
+          <Download width={17} />
+          Exportar
+        </Button>
       </div>
       <DataTable<IOrderList>
         columns={ColumnsListOrder({ onDelete: handleDeleteOrder, changeOrderStatusSale: handleChangeOrderStatusSale })}
