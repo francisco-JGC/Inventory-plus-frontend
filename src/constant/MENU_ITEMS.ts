@@ -40,3 +40,16 @@ export const MENU_ITEMS = [
     path: '/dashboard/users',
   },
 ]
+
+export const ROLE_PERMISSIONS: any = {
+  admin: [
+    'Panel',
+    'Nueva Factura',
+    'Facturas',
+    'Proveedores',
+    'Inventario',
+    'Usuarios',
+  ],
+  seller: ['Nueva Factura', 'Facturas'],
+  inventory: ['Inventario'],
+}
