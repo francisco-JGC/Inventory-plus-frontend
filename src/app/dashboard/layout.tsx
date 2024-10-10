@@ -6,7 +6,6 @@ import { MENU_ITEMS, ROLE_PERMISSIONS } from "@/constant/MENU_ITEMS";
 import { SidebarItem } from "@/components/sidebar/item";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +15,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [role, setRole] = useState<string | null>(null);
-  const router = useRouter()
 
   useEffect(() => {
     setRole(getCookie('role') as string);
@@ -25,8 +23,6 @@ export default function RootLayout({
   const filteredMenuItems = MENU_ITEMS.filter(item =>
     ROLE_PERMISSIONS[role || 'admin']?.includes(item.label)
   );
-
-  // router.push(filteredMenuItems[0].path)
 
   return (
     <html lang="en">
