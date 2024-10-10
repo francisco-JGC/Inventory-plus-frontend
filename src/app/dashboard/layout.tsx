@@ -28,7 +28,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="flex h-screen bg-gray-100">
-          <Sidebar className="sticky top-0 h-full">
+          <Sidebar className="sticky top-0 h-full"
+            role_user={role}
+          >
             {
               filteredMenuItems.map((item, index) => (
                 <SidebarItem

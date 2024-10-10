@@ -15,11 +15,12 @@ import { AlertDialogModal } from "../alertDialogModal";
 interface ISidebarItemProps {
   children: React.ReactNode;
   className: string;
+  role_user: string | null
 }
 
 export const SidebarContext = createContext({ expanded: true });
 
-export const Sidebar = ({ children, className }: ISidebarItemProps) => {
+export const Sidebar = ({ children, className, role_user }: ISidebarItemProps) => {
   const [expanded, setExpanded] = useState(true);
   const [username, setUsername] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
@@ -98,7 +99,7 @@ export const Sidebar = ({ children, className }: ISidebarItemProps) => {
           <ul className="flex-1 px-3">
             {children}
 
-            <div className="border-t-2 p-3 flex flex-col gap-3">
+            {role_user === 'admin' && <div className="border-t-2 p-3 flex flex-col gap-3">
               <AlertDialogModal onConfirm={handleGenerateBackupDB} title="Generar respaldo de  la base de datos"
                 nameButton="Generar respaldo"
                 description="El archivo se guardara automaticamente"
@@ -126,6 +127,7 @@ export const Sidebar = ({ children, className }: ISidebarItemProps) => {
                 />
               </label>
             </div>
+            }
           </ul>
         </SidebarContext.Provider>
 
