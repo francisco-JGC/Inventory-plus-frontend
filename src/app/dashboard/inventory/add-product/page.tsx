@@ -140,7 +140,7 @@ export default function AddProductPage() {
             <label className="font-medium  text-gray-400">Categoria</label>
 
             <select
-              name="category"
+              name="category_name"
               onChange={(e) => handleInputChange(e as any)}
               value={formValues.category_name}
               className=
