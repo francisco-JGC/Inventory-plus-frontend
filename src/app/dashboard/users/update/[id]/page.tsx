@@ -94,6 +94,7 @@ export default function Page({ params }: IRoot) {
             name="role_name"
             value={formValues.role_name}
             defaultValue={formValues.role_name}
+            className="p-2 bg-gray-100 rounded-lg border-2"
           >
             <option value="" disabled>Seleccione un rol</option>
             {
