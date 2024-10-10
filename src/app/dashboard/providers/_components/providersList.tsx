@@ -11,6 +11,8 @@ import { AddProvider } from './addProvider'
 import { Modal } from '@/components/modal'
 import { deleteProviderById, getPaginationProvider } from '@/services/provider'
 import { toast } from 'sonner'
+import { downloadProvidersReport } from '@/services/xlsx-report'
+import { Download } from 'lucide-react'
 
 export type IProvider = {
   id?: number
@@ -72,6 +74,15 @@ export const ProvidersList = () => {
     }
   }
 
+  const handleGenerateReportProviders = async () => {
+    toast.loading('Generando reporte de proveedores...', {
+      description: 'Porfavor espere un momento'
+    })
+
+    await downloadProvidersReport()
+    toast.dismiss()
+  }
+
   useEffect(() => {
     setLoading(true)
     const timeOut = setTimeout(() => {
@@ -101,7 +112,7 @@ export const ProvidersList = () => {
 
   return (
     <div className='bg-white p-4 shadow rounded flex flex-col gap-4'>
-      <div>
+      <div className='flex justify-between items-center'>
         <Modal
           Component={() => <AddProvider handleAddProvider={handleAddProvider} />}
           title='Nuevo proveedor'
@@ -111,6 +122,13 @@ export const ProvidersList = () => {
             Agregar Nuevo Proveedor
           </Button>
         </Modal>
+
+        <Button className="flex gap-2 items-center bg-indigo-500 hover:bg-indigo-600/90" title="Exportar Registro de venta del Mes"
+          onClick={handleGenerateReportProviders}
+        >
+          <Download width={17} />
+          Exportar
+        </Button>
       </div>
       <DataTable<IProvider>
         columns={ColumnListProviders({ onDelete: handleDeleteProvider })}
