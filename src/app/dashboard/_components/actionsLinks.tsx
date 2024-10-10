@@ -1,8 +1,19 @@
 import { Button } from "@/components/ui/button"
+import { downloadFluctuationReport } from "@/services/xlsx-report"
 import { Box, Boxes, File, Plus, Users } from "lucide-react"
 import Link from "next/link"
+import { toast } from "sonner"
 
 export const ActionsLinks = () => {
+  const handleGenerateFluctuationReport = async () => {
+    toast.loading('Generando reporte de top ventas...', {
+      description: 'Porfavor espere un momento'
+    })
+
+    await downloadFluctuationReport()
+    toast.dismiss()
+  }
+
   return (
     <div className="bg-white shadow-sm rounded-lg w-full p-4 ">
       <div>
@@ -37,11 +48,11 @@ export const ActionsLinks = () => {
           </Link>
         </Button>
 
-        <Button variant={"secondary"}>
-          <Link href={""} className="flex gap-2 items-center">
-            <File width={17} />
-            Generar Reportes
-          </Link>
+        <Button variant={"secondary"} className="flex gap-2 items-center"
+          onClick={handleGenerateFluctuationReport}
+        >
+          <File width={17} />
+          Generar Reportes de fluc.
         </Button>
       </div>
     </div>
