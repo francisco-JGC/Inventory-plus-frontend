@@ -5,7 +5,6 @@ import useForm from '@/hooks/useForm'
 import { useEffect, useState } from 'react'
 import { ISearch } from '../../_types/pagination'
 import { toast } from 'sonner'
-import { deleteUserById } from '@/services/user'
 import { changeOrderStatusSale, deleteOrderById, getPaginationOrder } from '@/services/order'
 
 export type IOrderList = {
