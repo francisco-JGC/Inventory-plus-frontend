@@ -10,6 +10,8 @@ import { toast } from 'sonner'
 import { deleteUserById, getPaginationUser } from '@/services/user'
 import { Modal } from '@/components/modal'
 import { AddUser } from './addUser'
+import { downloadUserReport } from '@/services/xlsx-report'
+import { Download } from 'lucide-react'
 
 export type IUser = {
   id: number
@@ -71,6 +73,15 @@ export const UsersList = () => {
     }
   }
 
+  const handleGenerateUserReport = async () => {
+    toast.loading('Generando reporte de usuarios...', {
+      description: 'Porfavor espere un momento'
+    })
+
+    await downloadUserReport()
+    toast.dismiss()
+  }
+
   useEffect(() => {
     setLoading(true)
     const timeOut = setTimeout(() => {
@@ -100,7 +111,7 @@ export const UsersList = () => {
 
   return (
     <div className='bg-white p-4 shadow rounded flex flex-col gap-4'>
-      <div>
+      <div className='flex justify-between items-center'>
         <Modal
           Component={() => <AddUser handleAddUser={handleAddUser} />}
           title='Nuevo Usuario'
@@ -110,6 +121,13 @@ export const UsersList = () => {
             Agregar Nuevo Usuario
           </Button>
         </Modal>
+
+        <Button className="flex gap-2 items-center bg-indigo-500 hover:bg-indigo-600/90" title="Exportar Registro de venta del Mes"
+          onClick={handleGenerateUserReport}
+        >
+          <Download width={17} />
+          Exportar
+        </Button>
       </div>
       <DataTable<IUser>
         columns={ColumnsListUsers({ onDelete: handleDeleteuser })}

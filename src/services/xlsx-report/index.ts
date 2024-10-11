@@ -31,3 +31,11 @@ export const downloadFluctuationReport = async () => {
     useToken: true,
   })
 }
+
+export const downloadUserReport = async () => {
+  return await fetchFile({
+    url: '/xlsx-report/user-report',
+    fileName: 'Reporte de usuarios.xlsx',
+    useToken: true,
+  })
+}
