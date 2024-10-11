@@ -12,12 +12,6 @@ export const StatisticData = ({ total_cash, cash_percentage, total_inventory_val
           <span className='text-gray-400 font-semibold text-xs tracking-wider'>VISTA GENERAL</span>
           <small className="text-gray-400">Información del mes actual</small>
         </div>
-        <div>
-          <Button className="flex gap-2 items-center bg-indigo-500 hover:bg-indigo-600/90" title="Exportar Registro de venta del Mes">
-            <Download width={17} />
-            Exportar
-          </Button>
-        </div>
       </div>
       <div className='flex justify-between relative'>
         <StatisticDataItem

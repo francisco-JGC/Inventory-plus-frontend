@@ -39,3 +39,11 @@ export const downloadUserReport = async () => {
     useToken: true,
   })
 }
+
+export const downloadTopProductsReport = async () => {
+  return await fetchFile({
+    url: '/xlsx-report/top-products-report',
+    fileName: 'Reporte de productos top.xlsx',
+    useToken: true,
+  })
+}
